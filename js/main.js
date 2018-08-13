@@ -1,5 +1,5 @@
-var gameWidth = 800; //was 352
-var gameHeight = 600; //was 224
+var gameWidth = 800;
+var gameHeight = 600;
 
 var game = new Phaser.Game(gameWidth, gameHeight, 'game', false, false);
 var slickUI;
