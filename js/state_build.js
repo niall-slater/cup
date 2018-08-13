@@ -9,7 +9,7 @@ var buildState = {
 	
 	create: function() {
 		
-		playState.world.map = [];
+		let map = [];
 		
 		let mapSize = 4;
 		
@@ -17,17 +17,17 @@ var buildState = {
 			let row = [];
 			for (let y = 0; y < mapSize; y++) {
 				//Load a test tilemap chunk for now
-				let chunk = game.load.tilemap('chunk_test');
+				let chunk = game.add.tilemap('chunk_test');
 				row.push(chunk);
 			}
-			playState.world.map.push(row);
+			map.push(row);
 		}
 		
 		console.log('Map built of size ' + mapSize);
 		
-		console.log(playState.world.map);
+		console.log(map);
 		
-		game.state.start('state_play');
+		game.state.start('state_play', true, false, map);
 	}
 	
 };
