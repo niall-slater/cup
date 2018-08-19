@@ -1,7 +1,7 @@
 /* MAP BUILDING GLOBALS */
 
 var MAP_SIZE = 4;
-var MAP_NUMBEROFCHUNKTYPES = MAP_SIZE * MAP_SIZE;
+var MAP_NUMBEROFCHUNKTYPES = 2;
 var MAP_NUMBEROFCHUNKSUBTYPES = 3;
 
 var buildState = {
@@ -21,7 +21,7 @@ var buildState = {
 			let row = [];
 			for (let y = 0; y < MAP_SIZE; y++) {
 				//Load a test tilemap chunk for now
-				let index = Math.floor(Math.random() * MAP_NUMBEROFCHUNKSUBTYPES);
+				let index = Math.floor(Math.random() * MAP_NUMBEROFCHUNKTYPES) + '_' + Math.floor(Math.random() * MAP_NUMBEROFCHUNKSUBTYPES);
 				row.push(index);
 			}
 			map.push(row);

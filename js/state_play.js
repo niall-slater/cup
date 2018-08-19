@@ -22,11 +22,11 @@ var playState = {
 		//Create map
 		
 		let currentChunkCoords = {x:0, y:0};
-		let currentChunkIndex = this.world.mapIndexes[currentChunkCoords.x][currentChunkCoords.y];
+		let currentChunkID = this.world.mapIndexes[currentChunkCoords.x][currentChunkCoords.y];
 		
-		console.log('Spawning in ' + currentChunkCoords + ' which is a chunk of variant ' + currentChunkIndex);
+		console.log('Spawning in ' + currentChunkCoords.x + ',' + currentChunkCoords.y + ' which is a chunk of variant ' + currentChunkID);
 		
-        this.world.currentChunk = game.add.tilemap('chunk_test'); //TODO: load correct chunk file
+        this.world.currentChunk = game.add.tilemap('chunk_' + currentChunkID);
 		
 		this.world.currentChunk.addTilesetImage('roguelike_general', 'tiles_roguelike');
 		
@@ -71,7 +71,7 @@ var playState = {
 	render: function() {
 		game.camera.scale.x = this.cameraScale;
 		game.camera.scale.y = this.cameraScale;
-		game.debug.text(game.time.fps, 750, 550, '#fff');
+		game.debug.text(game.time.fps, 5, 15, '#fff');
 	}
 	
 };
