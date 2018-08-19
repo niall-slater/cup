@@ -1,9 +1,15 @@
+/* MAP BUILDING GLOBALS */
+
+var MAP_SIZE = 4;
+var MAP_NUMBEROFCHUNKTYPES = MAP_SIZE * MAP_SIZE;
+var MAP_NUMBEROFCHUNKSUBTYPES = 3;
+
 var buildState = {
 	
 	preload: function() {
         
 		//Assemble a map using 16 random pre-loaded chunks
-		//This is where you load the chunks, maybe? Then assemble them in Create
+		/* Build a 2D array of indexes, that's all, and use them to choose which chunk to load on scene change */
 		
 	},
 	
@@ -11,19 +17,16 @@ var buildState = {
 		
 		let map = [];
 		
-		let mapSize = 4;
-		
-		for (let x = 0; x < mapSize; x++) {
+		for (let x = 0; x < MAP_SIZE; x++) {
 			let row = [];
-			for (let y = 0; y < mapSize; y++) {
+			for (let y = 0; y < MAP_SIZE; y++) {
 				//Load a test tilemap chunk for now
-				let chunk = game.add.tilemap('chunk_test');
-				row.push(chunk);
+				let index = Math.floor(Math.random() * MAP_NUMBEROFCHUNKSUBTYPES);
+				row.push(index);
 			}
 			map.push(row);
 		}
 		
-		console.log('Map built of size ' + mapSize);
 		
 		console.log(map);
 		

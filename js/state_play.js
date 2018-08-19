@@ -1,17 +1,17 @@
-var cursors;
+'use strict';
 
+let cursors;
 
 var playState = {
 	
 	world: {},
 	cameraScale: 2,
 	
-	init: function(builtMap) {
-		this.world.map = builtMap;
+	init: function(mapIndexes) {
+		this.world.mapIndexes = mapIndexes;
 	},
 	
 	preload: function() {
-        
 	},
 	
 	create: function() {
@@ -20,17 +20,25 @@ var playState = {
     	cursors = game.input.keyboard.createCursorKeys();
 		
 		//Create map
-		var map = this.world.map[0][0];
 		
-		map.addTilesetImage('roguelike_general', 'tiles_roguelike');
+		let currentChunkCoords = {x:0, y:0};
+		let currentChunkIndex = this.world.mapIndexes[currentChunkCoords.x][currentChunkCoords.y];
 		
-		layer0 = map.createLayer('passable');
+		console.log('Spawning in ' + currentChunkCoords + ' which is a chunk of variant ' + currentChunkIndex);
+		
+        this.world.currentChunk = game.add.tilemap('chunk_test'); //TODO: load correct chunk file
+		
+		this.world.currentChunk.addTilesetImage('roguelike_general', 'tiles_roguelike');
+		
+		let map = this.world.currentChunk;
+		
+		let layer0 = map.createLayer('under');
 		layer0.resizeWorld();
-		layer1 = map.createLayer('impassable');
+		let layer1 = map.createLayer('under-overlay');
 		layer1.resizeWorld();
-		layer2 = map.createLayer('decoration');
+		let layer2 = map.createLayer('middle');
 		layer2.resizeWorld();
-		layer3 = map.createLayer('overlay');
+		let layer3 = map.createLayer('over');
 		layer3.resizeWorld();
 		
 		//Display FPS

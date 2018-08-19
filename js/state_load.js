@@ -28,6 +28,11 @@ var loadState = {
 		/* TILEMAPS */
 		
 		//Map chunks
+		for (let i = 0; i < MAP_NUMBEROFCHUNKTYPES; i++) {
+			for (let j = 0; j < MAP_NUMBEROFCHUNKSUBTYPES; j++) {
+				//console.log('loading chunk ' + i + '_' + j);
+			}
+		}
         game.load.tilemap('chunk_test', 'res/maps/chunks/test.json', null, Phaser.Tilemap.TILED_JSON);
 		
 		
