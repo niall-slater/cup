@@ -106,6 +106,8 @@ var playState = {
 		
 		this.player.moveTo(playerX, playerY);
 		this.player.bringToTop();
+		this.currentLayers[2].bringToTop();
+		this.currentLayers[3].bringToTop();
 	}
 	
 };
