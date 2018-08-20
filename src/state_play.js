@@ -24,6 +24,9 @@ var playState = {
 		
 		this.player = new Player(game, 296, 250);
 		
+		this.creature = new Creature(game, 240, 100);
+		this.creature.moveTo(this.player.x, this.player.y);
+		
 		//Create map
 		this.createMap();
     	cursors = game.input.keyboard.createCursorKeys();
@@ -83,6 +86,7 @@ var playState = {
 		
 		this.world.currentChunk.setCollisionByExclusion([], true, 'middle', false);
 		this.player.bringToTop();
+		this.creature.bringToTop();
 		this.currentLayers[2].bringToTop();
 		this.currentLayers[3].bringToTop();
 	},
