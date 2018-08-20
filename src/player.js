@@ -9,7 +9,7 @@ class Player extends Phaser.Sprite {
         this.anchor.setTo(0.5, 0.5);
 		
 		this.animSpeed = 4;
-		this.moveSpeed = 200;
+		this.moveSpeed = 100;
 		
 		/*
         this.anim_idle = this.animations.add('anim_idle', [0]);

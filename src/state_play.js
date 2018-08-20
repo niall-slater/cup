@@ -6,7 +6,7 @@ var playState = {
 	
 	world: {},
 	cameraScale: 2,
-	currentChunkCoords: {x: 2, y: 2},
+	currentChunkCoords: {x: 1, y: 1},
 	currentLayers: [],
 	
 	init: function(mapIndexes) {
@@ -20,12 +20,12 @@ var playState = {
 	create: function() {
 		
 		game.physics.startSystem(Phaser.Physics.ARCADE);
-		game.time.desiredFps = 30;
+		game.time.desiredFps = 60;
+		
+		this.player = new Player(game, 296, 250);
 		
 		//Create map
 		this.createMap();
-		
-		this.player = new Player(game, 32, 32);
     	cursors = game.input.keyboard.createCursorKeys();
 		
 		//Display FPS
@@ -82,6 +82,9 @@ var playState = {
 		//layer2.debug = true;
 		
 		this.world.currentChunk.setCollisionByExclusion([], true, 'middle', false);
+		this.player.bringToTop();
+		this.currentLayers[2].bringToTop();
+		this.currentLayers[3].bringToTop();
 	},
 	
 	goToChunk: function(chunkX, chunkY, playerX, playerY) {
@@ -105,9 +108,6 @@ var playState = {
 		this.setUpChunk(newChunkID);
 		
 		this.player.moveTo(playerX, playerY);
-		this.player.bringToTop();
-		this.currentLayers[2].bringToTop();
-		this.currentLayers[3].bringToTop();
 	}
 	
 };

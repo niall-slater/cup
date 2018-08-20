@@ -75,11 +75,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup name="characters">
-  <object id="26" name="player" x="104.5" y="60.5">
-   <point/>
-  </object>
- </objectgroup>
+ <objectgroup name="objects"/>
  <layer name="middle" width="32" height="32">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
