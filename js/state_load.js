@@ -18,6 +18,7 @@ var loadState = {
 		//Character sprites
 		let maxChars = 17; //this is the number of characters in the spritesheet
         game.load.spritesheet('characters_roguelike', 'res/sprites/characters/roguelike.png', 16, 16, maxChars, 0, 1);
+		game.load.image('characters_test', 'res/sprites/characters/test.png');
         
 		//Ingame UI sprites
 		game.load.image('ui_speechBubble', 'res/sprites/ui/speechBubble.png');
@@ -31,7 +32,13 @@ var loadState = {
 		for (let i = 0; i < MAP_NUMBEROFCHUNKTYPES; i++) {
 			for (let j = 0; j < MAP_NUMBEROFCHUNKSUBTYPES; j++) {
 				//console.log('loading chunk ' + i + '_' + j);
-        		game.load.tilemap('chunk_' + i + '_' + j, 'res/maps/chunks/chunk_' + i + '_' + j + '.json', null, Phaser.Tilemap.TILED_JSON);
+				try {
+        			game.load.tilemap('chunk_' + i + '_' + j, 'res/maps/chunks/chunk_' + i + '_' + j + '.json', null, Phaser.Tilemap.TILED_JSON);
+				} catch (e) {
+					console.log(e);
+					console.log("Couldn't find chunk " + i + '_' + j);
+					continue;
+				}
 			}
 		}
 		

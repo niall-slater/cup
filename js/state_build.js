@@ -1,8 +1,8 @@
 /* MAP BUILDING GLOBALS */
 
 var MAP_SIZE = 4;
-var MAP_NUMBEROFCHUNKTYPES = 2;
-var MAP_NUMBEROFCHUNKSUBTYPES = 3;
+var MAP_NUMBEROFCHUNKTYPES = 16;
+var MAP_NUMBEROFCHUNKSUBTYPES = 1;
 
 var buildState = {
 	
@@ -22,11 +22,18 @@ var buildState = {
 			for (let y = 0; y < MAP_SIZE; y++) {
 				//Load a test tilemap chunk for now
 				let index = Math.floor(Math.random() * MAP_NUMBEROFCHUNKTYPES) + '_' + Math.floor(Math.random() * MAP_NUMBEROFCHUNKSUBTYPES);
-				row.push(index);
+				row.push('0_0');
 			}
 			map.push(row);
 		}
 		
+		//This x and y is the wrong way round - TODO: fix it! leaving it here for testing though
+		map = [
+			['4_0',		'1_0',	'3_0',	'2_0'],
+			['14_0',	'0_0',	'6_0',	'5_0'],
+			['15_0',	'8_0',	'10_0',	'11_0'],
+			['9_0',		'7_0',	'12_0',	'13_0']
+		];
 		
 		console.log(map);
 		
