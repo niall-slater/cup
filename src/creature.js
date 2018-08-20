@@ -37,6 +37,7 @@ class Creature extends Phaser.Sprite {
 	
 	moveTo(x, y) {
 		this.moveTarget = {x: x, y: y};
+			game.physics.arcade.moveToXY(this, this.moveTarget.x, this.moveTarget.y, this.moveSpeed);
 	}
 	
     die() {
@@ -47,11 +48,11 @@ class Creature extends Phaser.Sprite {
 	updateMovement() {
     	if (this.moveTarget != null) {
 			//Move to target
-			game.physics.arcade.moveToXY(this, this.moveTarget.x, this.moveTarget.y, this.moveSpeed);
 			//If we're there, delete moveTarget
 			if (Math.abs(this.x - this.moveTarget.x) < 1 && Math.abs(this.y - this.moveTarget.y) < 1) {
 				this.moveTarget = null;
-		console.log('update');
+				this.body.velocity.x = 0;
+				this.body.velocity.y = 0;
 			}
 		}
 	}
