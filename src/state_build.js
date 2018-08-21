@@ -17,14 +17,15 @@ var buildState = {
 		
 		let map = [];
 		
+		//TODO: Rewrite this to randomise the subtype but not the type
 		for (let x = 0; x < MAP_SIZE; x++) {
-			let row = [];
+			let column = [];
 			for (let y = 0; y < MAP_SIZE; y++) {
 				//Load a test tilemap chunk for now
 				let index = Math.floor(Math.random() * MAP_NUMBEROFCHUNKTYPES) + '_' + Math.floor(Math.random() * MAP_NUMBEROFCHUNKSUBTYPES);
-				row.push('0_0');
+				column.push(index);
 			}
-			map.push(row);
+			map.push(column);
 		}
 		
 		//This x and y is the wrong way round - TODO: fix it! leaving it here for testing though

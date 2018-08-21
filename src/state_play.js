@@ -24,8 +24,8 @@ var playState = {
 		
 		this.player = new Player(game, 296, 250);
 		
-		this.creature = new Creature(game, 240, 100);
-		this.creature.moveTo(this.player.x, this.player.y);
+		this.critter = new Critter(game, 240, 100);
+		this.critter.moveTo(this.player.x, this.player.y);
 		
 		//Create map
 		this.createMap();
@@ -37,23 +37,8 @@ var playState = {
 	
 	update: function() {
 		
-    	game.physics.arcade.collide(this.player, this.currentLayers[2]);
-		
-		//If player is at the edge of the screen, move to the adjacent chunk
-		if (this.player.x < 16) {
-			if (this.currentChunkCoords.x > 0)
-				this.goToChunk(this.currentChunkCoords.x - 1, this.currentChunkCoords.y, 490, this.player.y);
-		} else if (this.player.x > 512 - 16) {
-			if (this.currentChunkCoords.x < 3)
-				this.goToChunk(this.currentChunkCoords.x + 1, this.currentChunkCoords.y, 18, this.player.y);
-		} else if (this.player.y < 16) {
-				if (this.currentChunkCoords.y > 0)
-			this.goToChunk(this.currentChunkCoords.x, this.currentChunkCoords.y - 1, this.player.x, 490);
-		} else if (this.player.y > 512 - 16) {
-			if (this.currentChunkCoords.y < 3)
-				this.goToChunk(this.currentChunkCoords.x, this.currentChunkCoords.y + 1, this.player.x, 18);
-		}
-
+    	this.handleObjectCollision();
+        this.handleWorldCollision();
 	},
 	
 	render: function() {
@@ -62,7 +47,7 @@ var playState = {
 	
 	createMap: function() {
 		
-		//This x and y is the wrong way round - TODO: fix it! leaving it here for testing though
+		//This x and y is the wrong way round - TODO: fix it! (will require refactor in state_build.js) leaving it here for testing though
 		let currentChunkID = this.world.mapIndexes[this.currentChunkCoords.y][this.currentChunkCoords.x];
 		this.setUpChunk(currentChunkID);
 	
@@ -86,7 +71,7 @@ var playState = {
 		
 		this.world.currentChunk.setCollisionByExclusion([], true, 'middle', false);
 		this.player.bringToTop();
-		this.creature.bringToTop();
+		this.critter.bringToTop();
 		this.currentLayers[2].bringToTop();
 		this.currentLayers[3].bringToTop();
 	},
@@ -112,6 +97,31 @@ var playState = {
 		this.setUpChunk(newChunkID);
 		
 		this.player.moveTo(playerX, playerY);
-	}
+	},
+    
+    handleObjectCollision: function() {
+        
+        game.physics.arcade.collide(this.player, this.currentLayers[2]);
+        
+    },
+    
+    handleWorldCollision: function() {
+        
+		//If player is at the edge of the screen, move to the adjacent chunk
+        
+		if (this.player.x < 16) {
+			if (this.currentChunkCoords.x > 0)
+				this.goToChunk(this.currentChunkCoords.x - 1, this.currentChunkCoords.y, 490, this.player.y);
+		} else if (this.player.x > 512 - 16) {
+			if (this.currentChunkCoords.x < 3)
+				this.goToChunk(this.currentChunkCoords.x + 1, this.currentChunkCoords.y, 18, this.player.y);
+		} else if (this.player.y < 16) {
+				if (this.currentChunkCoords.y > 0)
+			this.goToChunk(this.currentChunkCoords.x, this.currentChunkCoords.y - 1, this.player.x, 490);
+		} else if (this.player.y > 512 - 16) {
+			if (this.currentChunkCoords.y < 3)
+				this.goToChunk(this.currentChunkCoords.x, this.currentChunkCoords.y + 1, this.player.x, 18);
+		}
+    }
 	
 };

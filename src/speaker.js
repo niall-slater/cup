@@ -1,4 +1,4 @@
-class Creature extends Phaser.Sprite {
+class Speaker extends Phaser.Sprite {
 	
     constructor(game, x, y) {
         super(game, 0, 0);
@@ -35,26 +35,34 @@ class Creature extends Phaser.Sprite {
     }
 	
 	
-	moveTo(x, y) {
-		this.moveTarget = {x: x, y: y};
-			game.physics.arcade.moveToXY(this, this.moveTarget.x, this.moveTarget.y, this.moveSpeed);
+	moveTo(posX, posY) {
+		this.moveTarget = {x: posX, y: posY};
+        game.physics.arcade.moveToXY(this, this.moveTarget.x, this.moveTarget.y, this.moveSpeed);
 	}
 	
     die() {
         this.destroy();
     }
 	
-	//Movement
 	updateMovement() {
+        
+        //If we've arrived at the moveTarget, delete it and zero out our velocity.
     	if (this.moveTarget != null) {
-			//Move to target
-			//If we're there, delete moveTarget
 			if (Math.abs(this.x - this.moveTarget.x) < 1 && Math.abs(this.y - this.moveTarget.y) < 1) {
 				this.moveTarget = null;
-				this.body.velocity.x = 0;
-				this.body.velocity.y = 0;
+				this.body.velocity.x = 0; this.body.velocity.y = 0;
 			}
 		}
+	}
+    
+	
+	say(text) {
+        
+        //Create a sprite with text in it (placeholder graphics)
+		let bubble = new SpeechBubble(game, this.x - 12, this.y - 30, text);
+        
+        //Add the bubble object to a dedicated effects layer
+		//groupEffects.add(bubble);
 	}
 	
 }
