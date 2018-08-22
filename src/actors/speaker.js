@@ -1,6 +1,6 @@
 class Speaker extends Phaser.Sprite {
 	
-    constructor(game, x, y) {
+    constructor(game, x, y, phrase) {
         super(game, 0, 0);
          
         Phaser.Sprite.call(this, game, x, y, 'characters_test');
@@ -12,6 +12,8 @@ class Speaker extends Phaser.Sprite {
 		this.moveSpeed = 100;
 		
 		this.moveTarget = null;
+        
+        this.phrase = phrase;
 		
 		/*
         this.anim_idle = this.animations.add('anim_idle', [0]);
@@ -26,8 +28,6 @@ class Speaker extends Phaser.Sprite {
     	this.body.collideWorldBounds = true;
 		
 		//this.animations.play('anim_walk', this.animSpeed, true);
-        
-        this.say('Hello');
     }
     
     update() {
@@ -57,11 +57,14 @@ class Speaker extends Phaser.Sprite {
 		}
 	}
     
+    onInteract() {
+        this.say(this.phrase);
+    }
 	
 	say(text) {
         
         //Create a sprite with text in it (placeholder graphics)
-		let bubble = new SpeechBubble(game, this.x - 12, this.y - 30, text);
+		let bubble = new SpeechBubble(game, this.x, this.y, text);
         
         //Add the bubble object to a dedicated effects layer
 		playState.groupEffects.add(bubble);

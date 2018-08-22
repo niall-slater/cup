@@ -36,7 +36,7 @@ var playState = {
 		this.critter = new Critter(game, 240, 100);
 		this.critter.moveTo(this.player.x, this.player.y);
         this.groupActors.add(this.critter);
-		this.speaker = new Speaker(game, 260, 100);
+		this.speaker = new Speaker(game, 260, 100, 'I lost my cup. :(');
         this.groupActors.add(this.speaker);
 		
 		//Create map

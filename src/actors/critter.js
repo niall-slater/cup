@@ -34,7 +34,10 @@ class Critter extends Phaser.Sprite {
 		
     }
 	
-	
+	onInteract() {
+        console.log('Interacted');
+    }
+    
 	moveTo(posX, posY) {
 		this.moveTarget = {x: posX, y: posY};
         game.physics.arcade.moveToXY(this, this.moveTarget.x, this.moveTarget.y, this.moveSpeed);

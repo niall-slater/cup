@@ -10,7 +10,7 @@ class Player extends Phaser.Sprite {
 		
 		this.animSpeed = 4;
 		this.moveSpeed = 100;
-		
+        
 		/*
         this.anim_idle = this.animations.add('anim_idle', [0]);
         this.anim_walk = this.animations.add('anim_walk', [0,1]);
@@ -25,6 +25,11 @@ class Player extends Phaser.Sprite {
 		game.camera.follow(this);
 		
 		//this.animations.play('anim_walk', this.animSpeed, true);
+        
+        /* KEYBOARD INPUT */
+        
+        this.KEY_INTERACT = game.input.keyboard.addKey(Phaser.Keyboard.X);
+        this.KEY_INTERACT.onDown.add(this.interact.bind(this));
     }
     
     update() {
@@ -49,7 +54,6 @@ class Player extends Phaser.Sprite {
 		{
 			this.body.velocity.y = this.moveSpeed;
 		}
-		
     }
 	
     die() {
@@ -61,4 +65,25 @@ class Player extends Phaser.Sprite {
 		this.y = y;
 	}
 	
+    interact() {
+        
+        for (let i = 0; i < playState.groupActors.children.length; i++) {
+            let actor = playState.groupActors.children[i];
+            if (actor === this) {
+                continue;
+            }
+            if (this.isNextTo(actor)) {
+                actor.onInteract();
+                return;
+            }
+        }
+    }
+    
+    isNextTo(sprite) {
+        if (Math.abs(this.x - sprite.x) < 16 && Math.abs(this.y - sprite.y) < 16) {
+            return true;
+        } else {
+            return false;
+        }
+    } 
 };

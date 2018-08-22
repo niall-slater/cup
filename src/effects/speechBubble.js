@@ -6,8 +6,8 @@ class SpeechBubble extends Phaser.Sprite {
 		let width = 50;
 		let height = 20;
 		
-        y = y - 14;
-        x = x - 8;
+        y = y - 68;
+        x = x - 28;
 		
 		this.anchor.setTo(0.5, 0.5);
 		
@@ -33,8 +33,8 @@ class SpeechBubble extends Phaser.Sprite {
 			stretch = 1;
 		}
 		
-		this.background.width = stretch;
-		this.background.height = stretch/2;
+		this.background.width = stretch/2;
+		this.background.height = stretch/4;
         
     }
     
