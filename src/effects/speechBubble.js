@@ -6,7 +6,8 @@ class SpeechBubble extends Phaser.Sprite {
 		let width = 50;
 		let height = 20;
 		
-        y = y + Math.random() * 6 - 3;
+        y = y - 14;
+        x = x - 8;
 		
 		this.anchor.setTo(0.5, 0.5);
 		
@@ -14,9 +15,9 @@ class SpeechBubble extends Phaser.Sprite {
 		
         this.background = new Phaser.Sprite(game, 0, 0, 'ui_speechBubble');
 		
-		this.lifeTime = 1;
+		this.lifeTime = 2;
 		
-		let padding = 2;
+		let padding = 3;
 		
 		this.phrase = game.add.text(padding, padding, text, style_default);
 		
@@ -26,25 +27,14 @@ class SpeechBubble extends Phaser.Sprite {
 		this.phrase.setTextBounds(padding, padding);
 		
 		
-		let stretch = padding * 2 + text.length * 5;
+		let stretch = padding * 2 + text.length * 12;
 		
 		if (stretch < 1) {
 			stretch = 1;
 		}
 		
 		this.background.width = stretch;
-        
-        /*
-        
-        TODO: Change this to use phaser's geom renderer instead of sprites, like so:
-        
-            // draw a rectangle
-            graphics.lineStyle(2, 0x0000FF, 1);
-            graphics.beginFill(0xFFFF0B, 0.5);
-            graphics.drawRect(6, 512-height, 500, height);
-            graphics.endFill();
-    
-        */
+		this.background.height = stretch/2;
         
     }
     

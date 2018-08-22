@@ -26,6 +26,8 @@ class Speaker extends Phaser.Sprite {
     	this.body.collideWorldBounds = true;
 		
 		//this.animations.play('anim_walk', this.animSpeed, true);
+        
+        this.say('Hello');
     }
     
     update() {
@@ -62,7 +64,7 @@ class Speaker extends Phaser.Sprite {
 		let bubble = new SpeechBubble(game, this.x - 12, this.y - 30, text);
         
         //Add the bubble object to a dedicated effects layer
-		//groupEffects.add(bubble);
+		playState.groupEffects.add(bubble);
 	}
 	
 }

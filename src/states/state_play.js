@@ -8,6 +8,10 @@ var playState = {
 	cameraScale: 2,
 	currentChunkCoords: {x: 1, y: 1},
 	currentLayers: [],
+    
+    /* Sprite Groups */
+    groupActors: null,
+    groupEffects: null,
 	
 	init: function(mapIndexes) {
 		this.world.mapIndexes = mapIndexes;
@@ -22,10 +26,18 @@ var playState = {
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 		game.time.desiredFps = 60;
 		
+        this.groupActors = game.add.group();
+        this.groupEffects = game.add.group();
+        
 		this.player = new Player(game, 296, 250);
 		
+        this.groupActors.add(this.player);
+        
 		this.critter = new Critter(game, 240, 100);
 		this.critter.moveTo(this.player.x, this.player.y);
+        this.groupActors.add(this.critter);
+		this.speaker = new Speaker(game, 260, 100);
+        this.groupActors.add(this.speaker);
 		
 		//Create map
 		this.createMap();
@@ -70,10 +82,10 @@ var playState = {
 		//layer2.debug = true;
 		
 		this.world.currentChunk.setCollisionByExclusion([], true, 'middle', false);
-		this.player.bringToTop();
-		this.critter.bringToTop();
+		game.world.bringToTop(this.groupActors);
 		this.currentLayers[2].bringToTop();
 		this.currentLayers[3].bringToTop();
+		game.world.bringToTop(this.groupEffects);
 	},
 	
 	goToChunk: function(chunkX, chunkY, playerX, playerY) {
@@ -101,12 +113,14 @@ var playState = {
     
     handleObjectCollision: function() {
         
-        game.physics.arcade.collide(this.player, this.currentLayers[2]);
+        //game.physics.arcade.collide(x, y);
         
     },
     
     handleWorldCollision: function() {
         
+        
+        game.physics.arcade.collide(this.player, this.currentLayers[2]);
 		//If player is at the edge of the screen, move to the adjacent chunk
         
 		if (this.player.x < 16) {
