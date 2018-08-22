@@ -64,7 +64,7 @@ class Speaker extends Phaser.Sprite {
 	say(text) {
         
         //Create a sprite with text in it (placeholder graphics)
-		let bubble = new SpeechBubble(game, this.x, this.y, text);
+		let bubble = new SpeechBubble(game, this.x, this.y - 32, text);
         
         //Add the bubble object to a dedicated effects layer
 		playState.groupEffects.add(bubble);

@@ -29,7 +29,7 @@ var playState = {
         this.groupActors = game.add.group();
         this.groupEffects = game.add.group();
         
-		this.player = new Player(game, 296, 250);
+		this.player = new Player(game, 186, 250);
         this.groupActors.add(this.player);
         
 		//Create map

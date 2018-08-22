@@ -2,6 +2,8 @@ var loadState = {
 	
 	preload: function() {
 		
+        game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
+        
 		slickUI = game.plugins.add(Phaser.Plugin.SlickUI);
 		slickUI.load('res/slickUI/kenney/kenney.json');
 		
@@ -22,6 +24,17 @@ var loadState = {
         
 		//Ingame UI sprites
 		game.load.image('ui_speechBubble', 'res/sprites/ui/speechBubble.png');
+		game.load.image('ui_speechBubble_topleft', 'res/sprites/ui/speechBubble9/topleft.png');
+		game.load.image('ui_speechBubble_top', 'res/sprites/ui/speechBubble9/top.png');
+		game.load.image('ui_speechBubble_topright', 'res/sprites/ui/speechBubble9/topright.png');
+		game.load.image('ui_speechBubble_left', 'res/sprites/ui/speechBubble9/left.png');
+		game.load.image('ui_speechBubble_center', 'res/sprites/ui/speechBubble9/center.png');
+		game.load.image('ui_speechBubble_right', 'res/sprites/ui/speechBubble9/right.png');
+		game.load.image('ui_speechBubble_bottomleft', 'res/sprites/ui/speechBubble9/bottomleft.png');
+		game.load.image('ui_speechBubble_bottom', 'res/sprites/ui/speechBubble9/bottom.png');
+		game.load.image('ui_speechBubble_bottomright', 'res/sprites/ui/speechBubble9/bottomright.png');
+		game.load.image('ui_speechBubble_tail', 'res/sprites/ui/speechBubble9/tail.png');
+        
 		
 		//Effect sprites
 		game.load.image('effect_smoke', 'res/sprites/effects/smoke.png');

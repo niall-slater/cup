@@ -30,7 +30,7 @@
                 {
                  "height":0,
                  "id":26,
-                 "name":"guide",
+                 "name":"villager",
                  "point":true,
                  "properties":
                     {
@@ -44,8 +44,68 @@
                  "type":"speaker",
                  "visible":true,
                  "width":0,
-                 "x":448.333333333333,
-                 "y":303.666666666667
+                 "x":447.666666666667,
+                 "y":368.333333333333
+                }, 
+                {
+                 "height":0,
+                 "id":30,
+                 "name":"villager",
+                 "point":true,
+                 "properties":
+                    {
+                     "phrase":"I'm fishing!"
+                    },
+                 "propertytypes":
+                    {
+                     "phrase":"string"
+                    },
+                 "rotation":0,
+                 "type":"speaker",
+                 "visible":true,
+                 "width":0,
+                 "x":174.166666666667,
+                 "y":316.333333333333
+                }, 
+                {
+                 "height":0,
+                 "id":31,
+                 "name":"villager",
+                 "point":true,
+                 "properties":
+                    {
+                     "phrase":"*Sigh*"
+                    },
+                 "propertytypes":
+                    {
+                     "phrase":"string"
+                    },
+                 "rotation":0,
+                 "type":"speaker",
+                 "visible":true,
+                 "width":0,
+                 "x":350,
+                 "y":395.333333333333
+                }, 
+                {
+                 "height":0,
+                 "id":32,
+                 "name":"villager",
+                 "point":true,
+                 "properties":
+                    {
+                     "phrase":"I hate that guy."
+                    },
+                 "propertytypes":
+                    {
+                     "phrase":"string"
+                    },
+                 "rotation":0,
+                 "type":"speaker",
+                 "visible":true,
+                 "width":0,
+                 "x":174,
+                 "y":243
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -75,7 +135,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":28,
+ "nextobjectid":33,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.1.6",

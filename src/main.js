@@ -4,6 +4,15 @@ var gameHeight = 512;
 var game = new Phaser.Game(gameWidth, gameHeight, 'game', false, false);
 var slickUI;
 
+
+WebFontConfig = {
+
+    google: {
+      families: ['VT323']
+    }
+
+};
+
 game.antialias = false;
 
 game.state.add('state_load', loadState);
