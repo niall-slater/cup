@@ -13,6 +13,8 @@ class SpeechBubble extends Phaser.Sprite {
         
         this.pieces = [];
         
+        //Assemble the separate pieces of the speech bubble with small pixel adjustments so they fit
+        
         this.pieces.push(game.add.image(x-width/2-1, y-height/2-1, 'ui_speechBubble_topleft'));
         this.pieces.push(game.add.image(x-width/2+1, y-height/2, 'ui_speechBubble_top'));
         this.pieces.push(game.add.image((x+width/2)-1, (y-height/2)-1, 'ui_speechBubble_topright'));
@@ -23,7 +25,7 @@ class SpeechBubble extends Phaser.Sprite {
         this.pieces.push(game.add.image(x+width/2-1, y+height/2-1, 'ui_speechBubble_bottomright'));
         this.pieces.push(game.add.image(x, y+height/2, 'ui_speechBubble_tail'));
         
-        //Bring the corners and the tail to the top, and stretch the edges to the full width & height
+        //Draw the corners and tail on top, and stretch the edges to the full width & height
         this.pieces[0].bringToTop();
         this.pieces[1].width = width-2;
         this.pieces[2].bringToTop();

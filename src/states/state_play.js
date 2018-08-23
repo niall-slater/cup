@@ -97,7 +97,7 @@ var playState = {
 		
 		this.currentChunkCoords = {x: chunkX, y: chunkY};
 		
-		//If this is not a brand-new map, destroy the previous chunk
+		//If moving from another chunk, destroy the previous chunk
 		if (this.currentLayers.length > 0) {
 			this.currentLayers.map(function(layer) {
 				layer.destroy();
