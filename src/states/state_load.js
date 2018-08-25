@@ -1,6 +1,10 @@
 var loadState = {
 	
 	preload: function() {
+
+		game.scale.pageAlignHorizontally = true;
+		game.scale.pageAlignVertically = true;
+		game.scale.refresh();
 		
         game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
         
