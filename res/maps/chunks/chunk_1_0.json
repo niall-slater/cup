@@ -26,10 +26,30 @@
         {
          "draworder":"topdown",
          "name":"objects",
-         "objects":[],
+         "objects":[
+                {
+                 "height":0,
+                 "id":26,
+                 "name":"villager",
+                 "point":true,
+                 "properties":
+                    {
+                     "phrase":"this is the fort"
+                    },
+                 "propertytypes":
+                    {
+                     "phrase":"string"
+                    },
+                 "rotation":0,
+                 "type":"speaker",
+                 "visible":true,
+                 "width":0,
+                 "x":274,
+                 "y":459
+                }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
@@ -55,7 +75,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":26,
+ "nextobjectid":27,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.1.5",

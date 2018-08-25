@@ -30,7 +30,6 @@ var playState = {
         this.groupEffects = game.add.group();
         
 		this.player = new Player(game, 186, 250);
-        this.groupActors.add(this.player);
         
 		//Create map
 		this.createMap();
@@ -68,26 +67,19 @@ var playState = {
 		this.currentLayers.push(this.world.currentChunk.createLayer('under-overlay'));
 		this.currentLayers.push(this.world.currentChunk.createLayer('middle'));
 		this.currentLayers.push(this.world.currentChunk.createLayer('over'));
-        
-        let objects = this.world.currentChunk.objects.objects;
-        
-        objects.map(this.createFromObject);
-
 		this.currentLayers[0].resizeWorld();
-        
+		
         // Set the middle layer to be the collision layer        
 		this.world.currentChunk.setCollisionByExclusion([], true, 'middle', false);
+        
 		
-        
-        /* TODO: Critters, creatures and other bits should be generated from JSON data */
-        
-		this.critter = new Critter(game, 240, 100);
-		this.critter.moveTo(this.player.x, this.player.y);
-        this.groupActors.add(this.critter);
+		//Create objects from the tilemap's Objects layer
+        let objects = this.world.currentChunk.objects.objects;
+        objects.map(this.createFromObject);
 		
-        /* Arrange render layers for tiles and objects */
-        
+        //Arrange render layers for tiles and objects        
 		game.world.bringToTop(this.groupActors);
+		this.player.bringToTop();
 		this.currentLayers[2].bringToTop();
 		this.currentLayers[3].bringToTop();
 		game.world.bringToTop(this.groupEffects);
@@ -97,11 +89,21 @@ var playState = {
 		
 		this.currentChunkCoords = {x: chunkX, y: chunkY};
 		
+		
+		
 		//If moving from another chunk, destroy the previous chunk
 		if (this.currentLayers.length > 0) {
+			
+			//Also destroy existing objects
+			//(TODO: save their states for the next time we visit this chunk)
+			this.groupActors.removeAll();
+			this.groupEffects.removeAll();
+			
+			//Destroy layers
 			this.currentLayers.map(function(layer) {
 				layer.destroy();
 			});
+			
 			this.world.currentChunk.destroy();
 		}
 		this.currentLayers = [];
