@@ -13,6 +13,10 @@ var playState = {
     groupActors: null,
     groupEffects: null,
 	
+	/* Chunk transition effect */
+	chunkTransitionPlaying: false,
+	chunkTransitionSpeed: 350,
+	
 	init: function(mapIndexes) {
 		this.world.mapIndexes = mapIndexes;
 	},
@@ -89,33 +93,49 @@ var playState = {
 		
 		this.currentChunkCoords = {x: chunkX, y: chunkY};
 		
+		//Start fading the screen
+		game.camera.fade('#000', this.chunkTransitionSpeed, true);
+		playState.chunkTransitionPlaying = true;
 		
-		
-		//If moving from another chunk, destroy the previous chunk
-		if (this.currentLayers.length > 0) {
+		//Set a timer so we swap the chunks while the screen is dark
+		game.time.events.add(this.chunkTransitionSpeed, function() {
+			game.camera.flash('#000', playState.chunkTransitionSpeed, true);
 			
-			//Also destroy existing objects
-			//(TODO: save their states for the next time we visit this chunk)
-			this.groupActors.removeAll();
-			this.groupEffects.removeAll();
+			//Set flag once process is complete
+			game.time.events.add(playState.chunkTransitionSpeed, function() {
+				playState.chunkTransitionPlaying = false;
+			}, this);
 			
-			//Destroy layers
-			this.currentLayers.map(function(layer) {
-				layer.destroy();
-			});
+			//START THE CHUNK SWITCH
 			
-			this.world.currentChunk.destroy();
-		}
-		this.currentLayers = [];
-		
-		let newChunkCoords = {x: chunkX, y: chunkY};
+			//If moving from another chunk, destroy the previous chunk
+			if (this.currentLayers.length > 0) {
 
-		//This x and y is the wrong way round - TODO: fix it! leaving it here for testing though
-		let newChunkID = this.world.mapIndexes[newChunkCoords.y][newChunkCoords.x];
+				//Also destroy existing objects
+				//(TODO: save their states for the next time we visit this chunk)
+				this.groupActors.removeAll();
+				this.groupEffects.removeAll();
+
+				//Destroy layers
+				this.currentLayers.map(function(layer) {
+					layer.destroy();
+				});
+
+				this.world.currentChunk.destroy();
+			}
+			this.currentLayers = [];
+
+			let newChunkCoords = {x: chunkX, y: chunkY};
+
+			//This x and y is the wrong way round - TODO: fix it! leaving it here for testing though
+			let newChunkID = this.world.mapIndexes[newChunkCoords.y][newChunkCoords.x];
+
+			this.setUpChunk(newChunkID);
+
+			this.player.moveTo(playerX, playerY);
+			
+		}, this);
 		
-		this.setUpChunk(newChunkID);
-		
-		this.player.moveTo(playerX, playerY);
 	},
     
     handleObjectCollision: function() {
@@ -125,9 +145,13 @@ var playState = {
     },
     
     handleWorldCollision: function() {
-        
+		
+		if (this.chunkTransitionPlaying) {
+			return;
+		}
         
         game.physics.arcade.collide(this.player, this.currentLayers[2]);
+		
 		//If player is at the edge of the screen, move to the adjacent chunk
         
 		if (this.player.x < 16) {

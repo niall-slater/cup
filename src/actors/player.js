@@ -37,6 +37,10 @@ class Player extends Phaser.Sprite {
     	this.body.velocity.x = 0;
     	this.body.velocity.y = 0;
 		
+		if (playState.chunkTransitionPlaying) {
+			return;
+		}
+		
 		if (cursors.left.isDown)
 		{
 			this.body.velocity.x = -this.moveSpeed;

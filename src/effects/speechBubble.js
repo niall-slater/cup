@@ -3,7 +3,9 @@ class SpeechBubble extends Phaser.Sprite {
     constructor(game, x, y, text) {
         super(game, 0, 0);
 		
-		let width = 8 * text.length;
+		this.lifeTime = 2;
+		this.padding = 3;
+		let width = (this.padding * 2) + 6 * text.length;
 		let height = 22;
 		
 		this.anchor.setTo(0.5, 0.5);
@@ -40,10 +42,6 @@ class SpeechBubble extends Phaser.Sprite {
             this.pieces[i].x = Math.floor(this.pieces[i].x);
             this.pieces[i].y = Math.floor(this.pieces[i].y);
         }
-        
-		this.lifeTime = 2;
-		
-		this.padding = 3;
 		
 		this.phrase = game.add.text(this.padding, this.padding, text, style_default);
         this.phrase.bringToTop();
