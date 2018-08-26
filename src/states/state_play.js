@@ -175,7 +175,9 @@ var playState = {
         //Create an entity based on data from a Tiled JSON object
         switch(item.type) {
             case 'speaker': {
-                playState.groupActors.add(new Speaker(game, item.x, item.y, item.properties.phrase));
+				let spriteIndex = Math.floor(Math.random() * 16);
+				//TODO: pull spriteindex from the JSON data
+                playState.groupActors.add(new Speaker(game, item.x, item.y, item.properties.phrase, spriteIndex));
             }
         }
     }

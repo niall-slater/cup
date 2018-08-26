@@ -1,9 +1,9 @@
 class Speaker extends Phaser.Sprite {
 	
-    constructor(game, x, y, phrase) {
+    constructor(game, x, y, phrase, spriteIndex) {
         super(game, 0, 0);
          
-        Phaser.Sprite.call(this, game, x, y, 'characters_test');
+        Phaser.Sprite.call(this, game, x, y, 'characters_roguelike', spriteIndex);
 		
         
         this.anchor.setTo(0.5, 0.5);
