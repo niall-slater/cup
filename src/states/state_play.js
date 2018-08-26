@@ -56,7 +56,8 @@ var playState = {
 	createMap: function() {
 		
 		//This x and y is the wrong way round - TODO: fix it! (will require refactor in state_build.js) leaving it here for testing though
-		let currentChunkID = this.world.mapIndexes[this.currentChunkCoords.y][this.currentChunkCoords.x];
+		let currentChunkID = this.world.mapIndexes
+			[this.currentChunkCoords.y][this.currentChunkCoords.x];
 		this.setUpChunk(currentChunkID);
 	
 	},

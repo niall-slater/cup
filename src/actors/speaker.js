@@ -15,6 +15,9 @@ class Speaker extends Phaser.Sprite {
         
         this.phrase = phrase;
 		
+		this.speechBubbleAlive = false;
+		this.speechBubbleLifetime = 2;
+		
 		/*
         this.anim_idle = this.animations.add('anim_idle', [0]);
         this.anim_walk = this.animations.add('anim_walk', [0,1]);
@@ -62,9 +65,13 @@ class Speaker extends Phaser.Sprite {
     }
 	
 	say(text) {
-        
+		
+		if (this.speechBubbleAlive)
+			return;
+		
         //Create a sprite with text in it (placeholder graphics)
-		let bubble = new SpeechBubble(game, this.x, this.y - 32, text);
+		let bubble = new SpeechBubble(game, this.x, this.y - 32, text, this.speechBubbleLifetime, this);
+		this.speechBubbleAlive = true;
         
         //Add the bubble object to a dedicated effects layer
 		playState.groupEffects.add(bubble);

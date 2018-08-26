@@ -1,9 +1,11 @@
 class SpeechBubble extends Phaser.Sprite {
 	
-    constructor(game, x, y, text) {
+    constructor(game, x, y, text, lifetime, speaker) {
         super(game, 0, 0);
 		
-		this.lifeTime = 2;
+		this.lifeTime = lifetime;
+		this.speaker = speaker;
+		
 		this.padding = 3;
 		let width = (this.padding * 2) + 6 * text.length;
 		let height = 22;
@@ -56,6 +58,7 @@ class SpeechBubble extends Phaser.Sprite {
 		if (this.lifeTime > 0) {
         	this.lifeTime -= game.time.physicsElapsed;
 		} else {
+			this.speaker.speechBubbleAlive = false;
 			this.phrase.destroy();
 			this.destroy();
             
