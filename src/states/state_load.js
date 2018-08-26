@@ -19,12 +19,16 @@ var loadState = {
 		/* SPRITES */
 		
 		//Scenery tiles
-        game.load.spritesheet('tiles_roguelike', 'res/sprites/tiles/roguelike.png');
+        game.load.spritesheet('tiles_roguelike', 'res/sprites/tiles/roguelike.png',
+							  16, 16, -1, 0, 1);
 		
 		//Character sprites
 		let maxChars = 17; //this is the number of characters in the spritesheet
         game.load.spritesheet('characters_roguelike', 'res/sprites/characters/roguelike.png', 16, 16, maxChars, 0, 1);
 		game.load.image('characters_test', 'res/sprites/characters/test.png');
+		
+		//Item sprites
+		
         
 		//Ingame UI sprites
 		game.load.image('ui_speechBubble', 'res/sprites/ui/speechBubble.png');

@@ -10,6 +10,8 @@ class Player extends Phaser.Sprite {
 		
 		this.animSpeed = 4;
 		this.moveSpeed = 250;
+		
+		this.inventory = [];
         
 		/*
         this.anim_idle = this.animations.add('anim_idle', [0]);
@@ -81,6 +83,9 @@ class Player extends Phaser.Sprite {
                 return;
             }
         }
+		
+		//Test
+		console.log(this.inventory);
     }
     
     isNextTo(sprite) {

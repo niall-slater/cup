@@ -8,10 +8,6 @@ var playState = {
 	cameraScale: 2,
 	currentChunkCoords: {x: 1, y: 1},
 	currentLayers: [],
-    
-    /* Sprite Groups */
-    groupActors: null,
-    groupEffects: null,
 	
 	/* Chunk transition effect */
 	chunkTransitionPlaying: false,
@@ -30,10 +26,13 @@ var playState = {
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 		game.time.desiredFps = 60;
 		
+    	/* Sprite Groups */
         this.groupActors = game.add.group();
+        this.groupItems = game.add.group();
         this.groupEffects = game.add.group();
         
 		this.player = new Player(game, 186, 250);
+		this.groupItems.add(new Cup(game, 186, 150));
         
 		//Create map
 		this.createMap();
@@ -82,7 +81,8 @@ var playState = {
         let objects = this.world.currentChunk.objects.objects;
         objects.map(this.createFromObject);
 		
-        //Arrange render layers for tiles and objects        
+        //Arrange render layers for tiles and objects     
+		game.world.bringToTop(this.groupItems);   
 		game.world.bringToTop(this.groupActors);
 		this.player.bringToTop();
 		this.currentLayers[2].bringToTop();
@@ -115,6 +115,7 @@ var playState = {
 				//Also destroy existing objects
 				//(TODO: save their states for the next time we visit this chunk)
 				this.groupActors.removeAll();
+				this.groupItems.removeAll();
 				this.groupEffects.removeAll();
 
 				//Destroy layers
