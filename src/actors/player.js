@@ -9,7 +9,7 @@ class Player extends Phaser.Sprite {
         this.anchor.setTo(0.5, 0.5);
 		
 		this.animSpeed = 4;
-		this.moveSpeed = 250;
+		this.moveSpeed = 120;
 		
 		this.inventory = [];
         
@@ -24,7 +24,6 @@ class Player extends Phaser.Sprite {
 		this.body.setSize(14, 14, 0, 0);
     	this.body.drag = 50;
     	this.body.collideWorldBounds = true;
-		game.camera.follow(this);
 		
 		//this.animations.play('anim_walk', this.animSpeed, true);
         

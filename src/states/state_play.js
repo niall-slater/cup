@@ -5,7 +5,6 @@ let cursors;
 var playState = {
 	
 	world: {},
-	cameraScale: 2,
 	currentChunkCoords: {x: 1, y: 1},
 	currentLayers: [],
 	
@@ -40,6 +39,16 @@ var playState = {
 		
 		//Display FPS
 		game.time.advancedTiming = true;
+		
+		//Configure camera
+		game.world.setBounds(0, 0, 512, 512);
+		game.camera.setSize(256, 256);
+		game.camera.follow(this.player, .2, .2);
+		game.camera.x = this.player.x;
+		game.camera.y = this.player.y;
+		
+		
+    	game.camera.deadzone = new Phaser.Rectangle(96, 96, 64, 64);
 	},
 	
 	update: function() {
@@ -49,7 +58,8 @@ var playState = {
 	},
 	
 	render: function() {
-		game.debug.text(game.time.fps, 5, 15, '#fff');
+		//game.debug.text(game.time.fps, 5, 15, '#fff');
+    	//game.debug.cameraInfo(game.camera, 5, 32);
 	},
 	
 	createMap: function() {

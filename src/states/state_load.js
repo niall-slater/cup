@@ -4,7 +4,12 @@ var loadState = {
 
 		game.scale.pageAlignHorizontally = true;
 		game.scale.pageAlignVertically = true;
+		
+		game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
 		game.scale.refresh();
+		game.renderer.renderSession.roundPixels = true;
+		Phaser.Canvas.setImageRenderingCrisp(this.game.canvas)
+
 		
         game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
         
