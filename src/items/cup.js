@@ -6,8 +6,6 @@ class Cup extends Collectable {
 		Phaser.Sprite.call(this, game, x, y, 'tiles_roguelike', 853);
 		
     	this.anchor.setTo(0.5, 0.5);
-		
-		console.log(this);
 
 	}
 	

@@ -74,7 +74,7 @@ class Speaker extends Phaser.Sprite {
 		this.speechBubbleAlive = true;
         
         //Add the bubble object to a dedicated effects layer
-		playState.groupEffects.add(bubble);
+		playState.world.currentChunk.groupEffects.add(bubble);
 	}
 	
 }

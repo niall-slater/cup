@@ -6,7 +6,6 @@ var playState = {
 	
 	world: {},
 	currentChunkCoords: {x: 1, y: 1},
-	currentLayers: [],
 	
 	/* Chunk transition effect */
 	chunkTransitionPlaying: false,
@@ -24,18 +23,13 @@ var playState = {
 		
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 		game.time.desiredFps = 60;
-		
-    	/* Sprite Groups */
-        this.groupActors = game.add.group();
-        this.groupItems = game.add.group();
-        this.groupEffects = game.add.group();
         
+        //Create player
 		this.player = new Player(game, 186, 250);
-		this.groupItems.add(new Cup(game, 186, 150));
+    	cursors = game.input.keyboard.createCursorKeys();
         
 		//Create map
 		this.createMap();
-    	cursors = game.input.keyboard.createCursorKeys();
 		
 		//Display FPS
 		game.time.advancedTiming = true;
@@ -46,8 +40,6 @@ var playState = {
 		game.camera.follow(this.player, .2, .2);
 		game.camera.x = this.player.x;
 		game.camera.y = this.player.y;
-		
-		
     	game.camera.deadzone = new Phaser.Rectangle(96, 96, 64, 64);
 	},
 	
@@ -64,40 +56,14 @@ var playState = {
 	
 	createMap: function() {
 		
-		//This x and y is the wrong way round - TODO: fix it! (will require refactor in state_build.js) leaving it here for testing though
+		//This x and y is the wrong way round
+        //TODO: fix it! (will require refactor in state_build.js)
+        //leaving it here for testing though
 		let currentChunkID = this.world.mapIndexes
 			[this.currentChunkCoords.y][this.currentChunkCoords.x];
-		this.setUpChunk(currentChunkID);
-	
-	},
-	
-	setUpChunk: function(chunkID) {
-		
-        this.world.currentChunk = game.add.tilemap('chunk_' + chunkID);
-		this.world.currentChunk.addTilesetImage('roguelike_general', 'tiles_roguelike');
-		
-        // Build the tilemap from the cached Tiled JSON file
-		this.currentLayers.push(this.world.currentChunk.createLayer('under'));
-		this.currentLayers.push(this.world.currentChunk.createLayer('under-overlay'));
-		this.currentLayers.push(this.world.currentChunk.createLayer('middle'));
-		this.currentLayers.push(this.world.currentChunk.createLayer('over'));
-		this.currentLayers[0].resizeWorld();
-		
-        // Set the middle layer to be the collision layer        
-		this.world.currentChunk.setCollisionByExclusion([], true, 'middle', false);
         
-		
-		//Create objects from the tilemap's Objects layer
-        let objects = this.world.currentChunk.objects.objects;
-        objects.map(this.createFromObject);
-		
-        //Arrange render layers for tiles and objects     
-		game.world.bringToTop(this.groupItems);   
-		game.world.bringToTop(this.groupActors);
-		this.player.bringToTop();
-		this.currentLayers[2].bringToTop();
-		this.currentLayers[3].bringToTop();
-		game.world.bringToTop(this.groupEffects);
+        this.world.currentChunk = new Chunk(game, currentChunkID);
+	
 	},
 	
 	goToChunk: function(chunkX, chunkY, playerX, playerY) {
@@ -118,31 +84,14 @@ var playState = {
 			}, this);
 			
 			//START THE CHUNK SWITCH
-			
-			//If moving from another chunk, destroy the previous chunk
-			if (this.currentLayers.length > 0) {
-
-				//Also destroy existing objects
-				//(TODO: save their states for the next time we visit this chunk)
-				this.groupActors.removeAll();
-				this.groupItems.removeAll();
-				this.groupEffects.removeAll();
-
-				//Destroy layers
-				this.currentLayers.map(function(layer) {
-					layer.destroy();
-				});
-
-				this.world.currentChunk.destroy();
-			}
-			this.currentLayers = [];
-
+			this.world.currentChunk.disable();
+            
 			let newChunkCoords = {x: chunkX, y: chunkY};
 
 			//This x and y is the wrong way round - TODO: fix it! leaving it here for testing though
 			let newChunkID = this.world.mapIndexes[newChunkCoords.y][newChunkCoords.x];
-
-			this.setUpChunk(newChunkID);
+            
+			this.world.currentChunk = new Chunk(game, newChunkID);
 
 			this.player.moveTo(playerX, playerY);
 			
@@ -162,7 +111,7 @@ var playState = {
 			return;
 		}
         
-        game.physics.arcade.collide(this.player, this.currentLayers[2]);
+        game.physics.arcade.collide(this.player, this.world.currentChunk.currentLayers[2]);
 		
 		//If player is at the edge of the screen, move to the adjacent chunk
         
@@ -179,17 +128,6 @@ var playState = {
 			if (this.currentChunkCoords.y < 3)
 				this.goToChunk(this.currentChunkCoords.x, this.currentChunkCoords.y + 1, this.player.x, 18);
 		}
-    },
-    
-    createFromObject: function(item, index) {
-        //Create an entity based on data from a Tiled JSON object
-        switch(item.type) {
-            case 'speaker': {
-				let spriteIndex = Math.floor(Math.random() * 16);
-				//TODO: pull spriteindex from the JSON data
-                playState.groupActors.add(new Speaker(game, item.x, item.y, item.properties.phrase, spriteIndex));
-            }
-        }
     }
 	
 };

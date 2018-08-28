@@ -16,6 +16,7 @@ class Collectable extends Phaser.Sprite {
 	
 	onCollect() {
 		playState.player.inventory.push(this);
+		console.log('Collected ' + this);
 		this.destroy();
 	}
 }

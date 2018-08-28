@@ -72,8 +72,8 @@ class Player extends Phaser.Sprite {
 	
     interact() {
         
-        for (let i = 0; i < playState.groupActors.children.length; i++) {
-            let actor = playState.groupActors.children[i];
+        for (let i = 0; i < playState.world.currentChunk.groupActors.children.length; i++) {
+            let actor = playState.world.currentChunk.groupActors.children[i];
             if (actor === this) {
                 continue;
             }
