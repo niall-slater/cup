@@ -29,6 +29,12 @@ var playState = {
     	cursors = game.input.keyboard.createCursorKeys();
         
 		//Create map
+        this.world.chunkMap = [
+            [0,0,0,0],
+            [0,0,0,0],
+            [0,0,0,0],
+            [0,0,0,0]
+        ];
 		this.createMap();
 		
 		//Display FPS
@@ -63,7 +69,9 @@ var playState = {
 			[this.currentChunkCoords.y][this.currentChunkCoords.x];
         
         this.world.currentChunk = new Chunk(game, currentChunkID);
-	
+        
+        this.world.chunkMap[this.currentChunkCoords.y][this.currentChunkCoords.x] 
+            = this.world.currentChunk;
 	},
 	
 	goToChunk: function(chunkX, chunkY, playerX, playerY) {
@@ -87,11 +95,17 @@ var playState = {
 			this.world.currentChunk.disable();
             
 			let newChunkCoords = {x: chunkX, y: chunkY};
-
-			//This x and y is the wrong way round - TODO: fix it! leaving it here for testing though
-			let newChunkID = this.world.mapIndexes[newChunkCoords.y][newChunkCoords.x];
             
-			this.world.currentChunk = new Chunk(game, newChunkID);
+            //Check if the slot we're going to in the chunkMap has a chunk in it already
+            if (this.world.chunkMap[newChunkCoords.y][newChunkCoords.x] != 0) {
+                let foundChunk = this.world.chunkMap[newChunkCoords.y][newChunkCoords.x];
+                foundChunk.enable();
+                this.world.currentChunk = foundChunk;
+            } else {
+                let newChunkID = this.world.mapIndexes[newChunkCoords.y][newChunkCoords.x];
+                this.world.currentChunk = new Chunk(game, newChunkID);
+                this.world.chunkMap[newChunkCoords.y][newChunkCoords.x] = this.world.currentChunk;
+            }
 
 			this.player.moveTo(playerX, playerY);
 			

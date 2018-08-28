@@ -78,14 +78,25 @@ class Chunk {
         
         //Set up tilemap
         this.currentLayers = [];
-        this.tilemap = game.add.tilemap('chunk' + this.chunkID);
-        this.tilemap.currentChunk.addTilesetImage('roguelike_general', 'tiles_roguelike');
+        this.tilemap = game.add.tilemap('chunk_' + this.chunkID);
+        this.tilemap.addTilesetImage('roguelike_general', 'tiles_roguelike');
         
-		this.currentLayers.push(this.world.currentChunk.createLayer('under'));
-		this.currentLayers.push(this.world.currentChunk.createLayer('under-overlay'));
-		this.currentLayers.push(this.world.currentChunk.createLayer('middle'));
-		this.currentLayers.push(this.world.currentChunk.createLayer('over'));
+		this.currentLayers.push(this.tilemap.createLayer('under'));
+		this.currentLayers.push(this.tilemap.createLayer('under-overlay'));
+		this.currentLayers.push(this.tilemap.createLayer('middle'));
+		this.currentLayers.push(this.tilemap.createLayer('over'));
 		this.currentLayers[0].resizeWorld();
+        
+        // Set the middle layer to be the collision layer        
+		this.tilemap.setCollisionByExclusion([], true, 'middle', false);
+        
+        //Arrange render order for tiles and objects     
+		game.world.bringToTop(this.groupItems);   
+		game.world.bringToTop(this.groupActors);
+		playState.player.bringToTop();
+		this.currentLayers[2].bringToTop();
+		this.currentLayers[3].bringToTop();
+		game.world.bringToTop(this.groupEffects);
     }
     
 }
