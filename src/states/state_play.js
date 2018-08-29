@@ -50,13 +50,12 @@ var playState = {
 	},
 	
 	update: function() {
-        
-    	this.handleObjectCollision();
+        this.world.currentChunk.update();
         this.handleWorldCollision();
 	},
 	
 	render: function() {
-		//game.debug.text(game.time.fps, 5, 15, '#fff');
+		game.debug.text(game.time.fps, 5, 15, '#fff');
     	//game.debug.cameraInfo(game.camera, 5, 32);
 	},
 	
@@ -76,6 +75,8 @@ var playState = {
 	
 	goToChunk: function(chunkX, chunkY, playerX, playerY) {
 		
+        //TODO: bug: on chunk change all actors are moved to within camera view
+        
 		this.currentChunkCoords = {x: chunkX, y: chunkY};
 		
 		//Start fading the screen
@@ -108,16 +109,10 @@ var playState = {
             }
 
 			this.player.moveTo(playerX, playerY);
-			
+            
 		}, this);
 		
 	},
-    
-    handleObjectCollision: function() {
-        
-        //game.physics.arcade.collide(x, y);
-        
-    },
     
     handleWorldCollision: function() {
 		
@@ -126,6 +121,7 @@ var playState = {
 		}
         
         game.physics.arcade.collide(this.player, this.world.currentChunk.currentLayers[2]);
+        game.physics.arcade.collide(this.world.currentChunk.groupActors, this.world.currentChunk.currentLayers[2]);
 		
 		//If player is at the edge of the screen, move to the adjacent chunk
         

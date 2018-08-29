@@ -21,8 +21,9 @@ class Player extends Phaser.Sprite {
 		
         game.add.existing(this);
         game.physics.arcade.enable(this);
-		this.body.setSize(14, 14, 0, 0);
+		this.body.setSize(14, 14, 1, 1);
     	this.body.drag = 50;
+        this.body.mass = 5;
     	this.body.collideWorldBounds = true;
 		
 		//this.animations.play('anim_walk', this.animSpeed, true);
@@ -93,5 +94,5 @@ class Player extends Phaser.Sprite {
         } else {
             return false;
         }
-    } 
+    }
 };

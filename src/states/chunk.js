@@ -32,15 +32,20 @@ class Chunk {
         
         //Arrange render order for tiles and objects     
 		game.world.bringToTop(this.groupItems);   
+		this.currentLayers[2].bringToTop();
 		game.world.bringToTop(this.groupActors);
 		playState.player.bringToTop();
-		this.currentLayers[2].bringToTop();
 		this.currentLayers[3].bringToTop();
 		game.world.bringToTop(this.groupEffects);
         
         //Test stuff
 		this.groupItems.add(new Cup(game, 186, 150));
         
+    }
+    
+    update() {
+        //Handle player collision
+        game.physics.arcade.collide(playState.player, this.groupActors);
     }
     
     createFromObject(item, index) {
@@ -53,6 +58,12 @@ class Chunk {
                 this.groupActors.add(new Speaker(
                     game, item.x, item.y,
                     item.properties.phrase, spriteIndex));
+                break;
+            }
+            case 'critter': {
+                this.groupActors.add(new Critter(
+                    game, item.x, item.y));
+                break;
             }
         }
     }
@@ -92,9 +103,9 @@ class Chunk {
         
         //Arrange render order for tiles and objects     
 		game.world.bringToTop(this.groupItems);   
+		this.currentLayers[2].bringToTop();
 		game.world.bringToTop(this.groupActors);
 		playState.player.bringToTop();
-		this.currentLayers[2].bringToTop();
 		this.currentLayers[3].bringToTop();
 		game.world.bringToTop(this.groupEffects);
     }

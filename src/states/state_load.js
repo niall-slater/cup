@@ -32,6 +32,8 @@ var loadState = {
         game.load.spritesheet('characters_roguelike', 'res/sprites/characters/roguelike.png', 16, 16, maxChars, 0, 1);
 		game.load.image('characters_test', 'res/sprites/characters/test.png');
 		
+        game.load.spritesheet('critter_test', 'res/sprites/characters/critter_test.png', 16, 16, 3, 0, 0);
+        
 		//Item sprites
 		
         

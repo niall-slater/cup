@@ -3,29 +3,37 @@ class Critter extends Phaser.Sprite {
     constructor(game, x, y) {
         super(game, 0, 0);
          
-        Phaser.Sprite.call(this, game, x, y, 'characters_test');
-		
+        Phaser.Sprite.call(this, game, x, y, 'critter_test');
+		this.frame = 0;
         
         this.anchor.setTo(0.5, 0.5);
 		
-		this.animSpeed = 4;
-		this.moveSpeed = 100;
+		this.animSpeed = 2;
+		this.moveSpeed = 40;
 		
 		this.moveTarget = null;
 		
-		/*
-        this.anim_idle = this.animations.add('anim_idle', [0]);
-        this.anim_walk = this.animations.add('anim_walk', [0,1]);
-        this.anim_interact = this.animations.add('anim_interact', [2,3]);
-		*/
+		this.speechBubbleAlive = false;
+		this.speechBubbleLifetime = .5;
+		
+		
+        this.animations.add('idle', [0, 1]);
+        this.animations.add('walk', [0, 1]);
+        this.animations.add('jump', [1, 2]);
 		
         game.add.existing(this);
         game.physics.arcade.enable(this);
-		this.body.setSize(14, 14, 0, 0);
-    	this.body.drag = 50;
+		this.body.setSize(8, 8, 4, 4);
+        this.body.mass = -10;
+        this.body.immovable = false;
     	this.body.collideWorldBounds = true;
 		
-		//this.animations.play('anim_walk', this.animSpeed, true);
+        this.animations.play('idle', this.animSpeed, true);
+        this.body.onCollide = new Phaser.Signal();
+        this.body.onCollide.add(this.stopMoving, this);
+        
+        game.time.events.repeat(Phaser.Timer.SECOND * 5, 5, this.wander, this);
+        this.wander();
     }
     
     update() {
@@ -35,7 +43,7 @@ class Critter extends Phaser.Sprite {
     }
 	
 	onInteract() {
-        console.log('Interacted');
+        this.say('mrrrp');
     }
     
 	moveTo(posX, posY) {
@@ -46,16 +54,43 @@ class Critter extends Phaser.Sprite {
     die() {
         this.destroy();
     }
+    
+    wander() {
+        let wanderX = (-7 + Math.floor(Math.random() * 14)) * 10;
+        let wanderY = (-7 + Math.floor(Math.random() * 14)) * 10;
+        
+        this.moveTo(this.x + wanderX, this.y + wanderY);
+    }
 	
 	updateMovement() {
         
         //If we've arrived at the moveTarget, delete it and zero out our velocity.
     	if (this.moveTarget != null) {
-			if (Math.abs(this.x - this.moveTarget.x) < 1 && Math.abs(this.y - this.moveTarget.y) < 1) {
-				this.moveTarget = null;
-				this.body.velocity.x = 0; this.body.velocity.y = 0;
+            this.animations.play('jump', this.animSpeed * 4, true);
+			if (Math.abs(this.x - this.moveTarget.x) < 3 &&
+                Math.abs(this.y - this.moveTarget.y) < 3) {
+                this.stopMoving();
 			}
 		}
+	}
+    
+    stopMoving() {
+        this.moveTarget = null;
+        this.body.velocity.x = 0; this.body.velocity.y = 0;
+        this.animations.play('idle', this.animSpeed, true);
+    }
+	
+	say(text) {
+		
+		if (this.speechBubbleAlive)
+			return;
+		
+        //Create a sprite with text in it (placeholder graphics)
+		let bubble = new SpeechBubble(game, this.x, this.y - 16, text, this.speechBubbleLifetime, this);
+		this.speechBubbleAlive = true;
+        
+        //Add the bubble object to a dedicated effects layer
+		playState.world.currentChunk.groupEffects.add(bubble);
 	}
 	
 }
