@@ -32,8 +32,7 @@ class Critter extends Phaser.Sprite {
         this.body.onCollide = new Phaser.Signal();
         this.body.onCollide.add(this.stopMoving, this);
         
-        game.time.events.repeat(Phaser.Timer.SECOND * 5, 5, this.wander, this);
-        this.wander();
+        game.time.events.loop(Phaser.Timer.SECOND * 5, this.wander, this);
     }
     
     update() {
@@ -49,6 +48,13 @@ class Critter extends Phaser.Sprite {
 	moveTo(posX, posY) {
 		this.moveTarget = {x: posX, y: posY};
         game.physics.arcade.moveToXY(this, this.moveTarget.x, this.moveTarget.y, this.moveSpeed);
+        
+        if (this.moveTarget.x > this.x) {
+            this.scale.x = -1;
+        } else {
+            this.scale.x = 1;
+        }
+        
 	}
 	
     die() {
@@ -56,8 +62,18 @@ class Critter extends Phaser.Sprite {
     }
     
     wander() {
+        this.stopMoving();
+        
         let wanderX = (-7 + Math.floor(Math.random() * 14)) * 10;
         let wanderY = (-7 + Math.floor(Math.random() * 14)) * 10;
+        
+        let collisionLayer = 'middle';
+        
+        if (playState.world.currentChunk.getTileAtPixel(this.x + wanderX, this.y + wanderY, collisionLayer) != null) {
+            //Flip the coords if there's a solid tile in the way
+            wanderX = -wanderX;
+            wanderY = -wanderY;
+        }
         
         this.moveTo(this.x + wanderX, this.y + wanderY);
     }

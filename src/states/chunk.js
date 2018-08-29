@@ -110,4 +110,12 @@ class Chunk {
 		game.world.bringToTop(this.groupEffects);
     }
     
+    getTileAtPixel(x, y, layer) {
+        
+        let result = this.tilemap.getTile(Math.floor(x/16), Math.floor(y/16), layer);
+        
+        return result;
+        
+    }
+    
 }

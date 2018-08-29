@@ -41,7 +41,7 @@ var playState = {
 		game.time.advancedTiming = true;
 		
 		//Configure camera
-		game.world.setBounds(0, 0, 512, 512);
+//		game.world.setBounds(0, 0, 512, 512);
 		game.camera.setSize(256, 256);
 		game.camera.follow(this.player, .2, .2);
 		game.camera.x = this.player.x;
