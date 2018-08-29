@@ -14,7 +14,7 @@ let uiSize = {
 	panelHeight: 270-78
 };
 
-let style_default = { font: "14px sans-serif", fill: "#000", wordWrap: "true", wordWrapWidth: 330};
+let style_default = { font: "14px VT323", fill: "#000", wordWrap: "true", wordWrapWidth: 330};
 
 var menuState = {
 	

@@ -1,8 +1,18 @@
-var gameWidth = 512;
-var gameHeight = 512;
+var gameWidth = 256;
+var gameHeight = 256;
 
+var scale = 2;
 var game = new Phaser.Game(gameWidth, gameHeight, 'game', false, false);
 var slickUI;
+
+
+WebFontConfig = {
+
+    google: {
+      families: ['VT323']
+    }
+
+};
 
 game.antialias = false;
 
