@@ -86,7 +86,6 @@ class Chunk {
         this.groupItems.visible = true; this.groupItems.exists = true;
         this.groupEffects.visible = true; this.groupEffects.exists = true;
         
-        
         //Set up tilemap
         this.currentLayers = [];
         this.tilemap = game.add.tilemap('chunk_' + this.chunkID);

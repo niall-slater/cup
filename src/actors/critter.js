@@ -32,7 +32,7 @@ class Critter extends Phaser.Sprite {
 		this.body.setSize(8, 8, 4, 4);
         this.body.mass = -10;
         this.body.immovable = false;
-    	this.body.collideWorldBounds = true;
+    	this.body.collideWorldBounds = false;  
 		
         this.animations.play('idle', this.animSpeed, true);
         this.body.onCollide = new Phaser.Signal();
@@ -108,7 +108,7 @@ class Critter extends Phaser.Sprite {
 			return;
 		
         //Create a sprite with text in it (placeholder graphics)
-		let bubble = new SpeechBubble(game, this.x, this.y - 16, text, this.speechBubbleLifetime, this);
+		let bubble = new SpeechBubble(game, this.x, this.y - 25, text, this.speechBubbleLifetime, this);
 		this.speechBubbleAlive = true;
         
         //Add the bubble object to a dedicated effects layer

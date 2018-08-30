@@ -28,7 +28,7 @@ class Speaker extends Phaser.Sprite {
         game.physics.arcade.enable(this);
         this.body.immovable = true;
 		this.body.setSize(14, 14, 1, 1);
-    	this.body.collideWorldBounds = true;
+    	this.body.collideWorldBounds = false;
 		
 		//this.animations.play('anim_walk', this.animSpeed, true);
     }
