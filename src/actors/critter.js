@@ -38,8 +38,14 @@ class Critter extends Phaser.Sprite {
         this.body.onCollide = new Phaser.Signal();
         this.body.onCollide.add(this.stopMoving, this);
         
-        game.time.events.loop(Phaser.Timer.SECOND * 5, this.wander, this);
+        
+		game.time.events.add(Phaser.Timer.SECOND * Math.random() * 2, this.startWandering, this);
     }
+	
+	startWandering() {
+		this.wander();
+		game.time.events.loop(Phaser.Timer.SECOND * 5, this.wander, this);
+	}
     
     update() {
 		
