@@ -38,9 +38,6 @@ class Chunk {
 		this.currentLayers[3].bringToTop();
 		game.world.bringToTop(this.groupEffects);
         
-        //Test stuff
-		this.groupItems.add(new Cup(game, 186, 150));
-        
     }
     
     update() {
@@ -65,7 +62,12 @@ class Chunk {
                     game, item.x, item.y));
                 break;
             }
-        }
+            case 'monster': {
+                this.groupActors.add(new Monster(
+                    game, item.x, item.y));
+                break;
+            }
+		}
     }
     
     disable() {

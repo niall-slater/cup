@@ -34,6 +34,7 @@ var loadState = {
 		game.load.image('characters_test', 'res/sprites/characters/test.png');
 		
         game.load.spritesheet('critter_test', 'res/sprites/characters/critter_test.png', 16, 16, 6, 0, 0);
+        game.load.spritesheet('monster_test', 'res/sprites/characters/monster_test.png', 16, 16, 4, 0, 0);
         
 		//Item sprites
 		
