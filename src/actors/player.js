@@ -22,8 +22,8 @@ class Player extends Phaser.Sprite {
         game.add.existing(this);
         game.physics.arcade.enable(this);
 		this.body.setSize(14, 14, 1, 1);
-    	this.body.drag = 50;
-        this.body.mass = 5;
+    	this.body.drag = (25, 25);
+        this.body.mass = .01;
     	this.body.collideWorldBounds = true;
 		
 		//this.animations.play('anim_walk', this.animSpeed, true);
@@ -32,6 +32,9 @@ class Player extends Phaser.Sprite {
         
         this.KEY_INTERACT = game.input.keyboard.addKey(Phaser.Keyboard.X);
         this.KEY_INTERACT.onDown.add(this.interact.bind(this));
+		
+		this.health = 3;
+		this.punchForce = 100;
     }
     
     update() {
@@ -62,6 +65,14 @@ class Player extends Phaser.Sprite {
 		}
     }
 	
+	hurt(amount) {
+		this.health -= amount;
+		
+		if (this.health <= 0) {
+			this.die();
+		}
+	}
+	
     die() {
         this.destroy();
     }
@@ -79,7 +90,7 @@ class Player extends Phaser.Sprite {
                 continue;
             }
             if (this.isNextTo(actor)) {
-                actor.onInteract();
+                actor.onInteract(this);
                 return;
             }
         }
@@ -89,7 +100,9 @@ class Player extends Phaser.Sprite {
     }
     
     isNextTo(sprite) {
-        if (Math.abs(this.x - sprite.x) < 16 && Math.abs(this.y - sprite.y) < 16) {
+		let range = 25;
+		
+        if (Math.abs(this.x - sprite.x) < range && Math.abs(this.y - sprite.y) < range) {
             return true;
         } else {
             return false;

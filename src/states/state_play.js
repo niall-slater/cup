@@ -47,6 +47,8 @@ var playState = {
 		game.camera.x = this.player.x;
 		game.camera.y = this.player.y;
     	game.camera.deadzone = new Phaser.Rectangle(96, 96, 64, 64);
+		
+		this.ui = game.add.group();
 	},
 	
 	update: function() {
