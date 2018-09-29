@@ -116,6 +116,7 @@ var playState = {
 
 			this.player.moveTo(playerX, playerY);
             
+			ui.inventory.init();
 		}, this);
 		
 	},

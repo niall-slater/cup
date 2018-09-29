@@ -67,6 +67,11 @@ class Chunk {
                     game, item.x, item.y));
                 break;
             }
+            case 'cup': {
+                this.groupItems.add(new Cup(
+                    game, item.x, item.y));
+                break;
+            }
 		}
     }
     
