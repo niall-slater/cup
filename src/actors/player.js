@@ -10,8 +10,6 @@ class Player extends Phaser.Sprite {
 		
 		this.animSpeed = 4;
 		this.moveSpeed = 120;
-		
-		this.inventory = [];
         
 		/*
         this.anim_idle = this.animations.add('anim_idle', [0]);
@@ -28,13 +26,19 @@ class Player extends Phaser.Sprite {
 		
 		//this.animations.play('anim_walk', this.animSpeed, true);
         
+		
+		ui.inventory.init();
         /* KEYBOARD INPUT */
         
         this.KEY_INTERACT = game.input.keyboard.addKey(Phaser.Keyboard.X);
         this.KEY_INTERACT.onDown.add(this.interact.bind(this));
 		
+        this.KEY_INTERACT = game.input.keyboard.addKey(Phaser.Keyboard.Z);
+        this.KEY_INTERACT.onDown.add(this.toggleInventory.bind(this));
+		
 		this.health = 3;
 		this.punchForce = 100;
+		
     }
     
     update() {
@@ -83,7 +87,6 @@ class Player extends Phaser.Sprite {
 	}
 	
     interact() {
-        
         for (let i = 0; i < playState.world.currentChunk.groupActors.children.length; i++) {
             let actor = playState.world.currentChunk.groupActors.children[i];
             if (actor === this) {
@@ -95,8 +98,6 @@ class Player extends Phaser.Sprite {
             }
         }
 		
-		//Test
-		console.log(this.inventory);
     }
     
     isNextTo(sprite) {
@@ -108,4 +109,13 @@ class Player extends Phaser.Sprite {
             return false;
         }
     }
+	
+	addToInventory(item) {
+		ui.inventory.items.push(item);
+	}
+	
+	toggleInventory() {
+		//game.paused = !game.paused;
+		ui.inventory.toggle();
+	}
 };

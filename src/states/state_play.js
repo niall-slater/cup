@@ -7,6 +7,9 @@ var playState = {
 	world: {},
 	currentChunkCoords: {x: 1, y: 1},
 	
+	/* Play state paused (for menus and stuff) */
+	paused: false,
+	
 	/* Chunk transition effect */
 	chunkTransitionPlaying: false,
 	chunkTransitionSpeed: 350,
@@ -16,6 +19,8 @@ var playState = {
 	},
 	
 	preload: function() {
+		slickUI = game.plugins.add(Phaser.Plugin.SlickUI);
+		slickUI.load('res/slickUI/kenney/kenney.json');
 		
 	},
 	
