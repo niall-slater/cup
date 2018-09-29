@@ -27,7 +27,6 @@ class Player extends Phaser.Sprite {
 		//this.animations.play('anim_walk', this.animSpeed, true);
         
 		
-		ui.inventory.init();
         /* KEYBOARD INPUT */
         
         this.KEY_INTERACT = game.input.keyboard.addKey(Phaser.Keyboard.X);
@@ -115,7 +114,7 @@ class Player extends Phaser.Sprite {
 	}
 	
 	toggleInventory() {
-		//game.paused = !game.paused;
+		game.paused = !game.paused;
 		ui.inventory.toggle();
 	}
 };

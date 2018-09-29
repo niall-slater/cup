@@ -19,7 +19,6 @@ var playState = {
 	},
 	
 	preload: function() {
-		slickUI = game.plugins.add(Phaser.Plugin.SlickUI);
 		slickUI.load('res/slickUI/kenney/kenney.json');
 		
 	},
@@ -53,7 +52,7 @@ var playState = {
 		game.camera.y = this.player.y;
     	game.camera.deadzone = new Phaser.Rectangle(96, 96, 64, 64);
 		
-		this.ui = game.add.group();
+		ui.inventory.init();
 	},
 	
 	update: function() {
