@@ -9,7 +9,7 @@ class SpeechBubble extends Phaser.Sprite {
 		this.x = x; this.y = y;
 		
 		this.padding = 3;
-		let width = (this.padding * 2) + 7 * text.length;
+		let width = (this.padding * 2) + 8 * text.length;
 		let height = 22;
 		
 		this.anchor.setTo(0.5, 0.5);
@@ -45,9 +45,13 @@ class SpeechBubble extends Phaser.Sprite {
         for (var i = 0; i < this.pieces.length; i++) {
             this.pieces[i].x = Math.floor(this.pieces[i].x);
             this.pieces[i].y = Math.floor(this.pieces[i].y);
+			game.add.tween(this.pieces[i]).to( {alpha: 0}, this.lifeTime * 1000, Phaser.Easing.Exponential.In, true);
         }
 		
 		this.phrase = game.add.text(this.x + this.padding, this.y + this.padding, text, style_small);
+		
+		game.add.tween(this.background).to( {alpha: 0}, this.lifeTime * 1000, Phaser.Easing.Exponential.In, true);
+		game.add.tween(this.phrase).to( {alpha: 0}, this.lifeTime * 1000, Phaser.Easing.Exponential.In, true);
 		
 		this.phrase.anchor.setTo(0.5, 0.5);
         

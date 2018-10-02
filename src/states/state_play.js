@@ -113,6 +113,8 @@ var playState = {
                 this.world.currentChunk = new Chunk(game, newChunkID);
                 this.world.chunkMap[newChunkCoords.y][newChunkCoords.x] = this.world.currentChunk;
             }
+			
+			//Move the player to the right position and bring the UI back on top
 
 			this.player.moveTo(playerX, playerY);
 			game.world.bringToTop(ui.inventory.panel.container.displayGroup.parent);

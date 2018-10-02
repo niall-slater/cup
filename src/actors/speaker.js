@@ -31,6 +31,18 @@ class Speaker extends Phaser.Sprite {
     	this.body.collideWorldBounds = false;
 		
 		//this.animations.play('anim_walk', this.animSpeed, true);
+		
+		this.otherPhrases = [
+			'Sigh...',
+			'What?',
+			'Be careful out there.',
+			'Seen any critters?',
+			'So tired...',
+			"It's been a long day.",
+			'They say our time is up.'
+		];
+		
+		this.otherPhraseChance = 0.5;
     }
     
     update() {
@@ -69,8 +81,14 @@ class Speaker extends Phaser.Sprite {
 		if (this.speechBubbleAlive)
 			return;
 		
+		let speech = text;
+		
+		if (Math.random() < this.otherPhraseChance) {
+			speech = this.otherPhrases[Math.floor(Math.random() * this.otherPhrases.length)];
+		}
+		
         //Create a sprite with text in it (placeholder graphics)
-		let bubble = new SpeechBubble(game, this.x, this.y - 32, text, this.speechBubbleLifetime, this);
+		let bubble = new SpeechBubble(game, this.x, this.y - 32, speech, this.speechBubbleLifetime, this);
 		this.speechBubbleAlive = true;
         
         //Add the bubble object to a dedicated effects layer

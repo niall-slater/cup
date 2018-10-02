@@ -10,7 +10,7 @@ let uiSize = {
 };
 
 let style_default = { font: "24px VT323", fill: "#000", wordWrap: "true", wordWrapWidth: 330};
-let style_small = { font: "18px VT323", fill: "#333", wordWrap: "true", wordWrapWidth: 330};
+let style_small = { font: "19px VT323", fill: "#333", wordWrap: "true", wordWrapWidth: 330};
 
 
 var ui = {
@@ -21,8 +21,8 @@ var ui = {
 		displaying: false,
 		
 		margin: 12,
-		padding: 8,
-		listStartY: 28,
+		padding: 12,
+		listStartY: 0,
 		entryHeight: 18,
 		
 		init: function() {
@@ -33,7 +33,7 @@ var ui = {
 			//Title
 			ui.inventory.panel.add(ui.inventory.panel.title = new SlickUI.Element.Text(0, 0, 'INVENTORY', null, style_default)).centerHorizontally();
 			
-			ui.inventory.panel.alpha = .75;
+			ui.inventory.panel.alpha = .95;
 			ui.inventory.panel.x = this.margin + 256;
 		},
 		
@@ -71,12 +71,13 @@ var ui = {
 			let entry;
 			let icon;
 			
-			ui.inventory.panel.add(icon = new SlickUI.Element.DisplayObject(this.padding,
-																		this.listStartY + this.padding * 2 + (numItems * this.entryHeight),
-																		item));
 			
-			ui.inventory.panel.add(entry = new SlickUI.Element.Text(this.padding * 2,
-																		this.listStartY + numItems * this.entryHeight + this.padding,
+			ui.inventory.panel.add(icon = new SlickUI.Element.DisplayObject(
+				this.padding, Math.floor(this.listStartY + this.padding * 2 + (numItems * this.entryHeight - 2)),
+										 item));
+			
+			ui.inventory.panel.add(entry = new SlickUI.Element.Text(
+				Math.floor(this.padding * 2), Math.floor(this.listStartY + numItems * this.entryHeight + this.padding),
 																		item.name,
 																		null,
 																		style_small));

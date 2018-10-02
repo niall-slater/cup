@@ -94,8 +94,6 @@ class Chunk {
         });
         
         this.tilemap.destroy();
-		
-		ui.inventory.hideInventory();
     }
     
     enable() {
