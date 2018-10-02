@@ -128,8 +128,8 @@
                  "type":"cup",
                  "visible":true,
                  "width":0,
-                 "x":353.333333333333,
-                 "y":227.333333333333
+                 "x":353.333,
+                 "y":227.333
                 }, 
                 {
                  "height":0,
@@ -140,8 +140,8 @@
                  "type":"cup",
                  "visible":true,
                  "width":0,
-                 "x":392.666666666667,
-                 "y":212.666666666667
+                 "x":392.667,
+                 "y":212.667
                 }, 
                 {
                  "height":0,
@@ -152,20 +152,20 @@
                  "type":"cup",
                  "visible":true,
                  "width":0,
-                 "x":435.333333333333,
-                 "y":213.333333333333
+                 "x":435.333,
+                 "y":213.333
                 }, 
                 {
                  "height":0,
                  "id":37,
-                 "name":"cup",
+                 "name":"roast",
                  "point":true,
                  "rotation":0,
-                 "type":"cup",
+                 "type":"roast",
                  "visible":true,
                  "width":0,
-                 "x":478,
-                 "y":226
+                 "x":322,
+                 "y":274
                 }],
          "opacity":1,
          "type":"objectgroup",

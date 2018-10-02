@@ -112,7 +112,7 @@
   <object id="36" name="cup" type="cup" x="435.333" y="213.333">
    <point/>
   </object>
-  <object id="37" name="cup" type="cup" x="478" y="226">
+  <object id="37" name="roast" type="roast" x="322" y="274">
    <point/>
   </object>
  </objectgroup>

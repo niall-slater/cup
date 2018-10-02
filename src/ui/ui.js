@@ -33,8 +33,8 @@ var ui = {
 			//Title
 			ui.inventory.panel.add(ui.inventory.panel.title = new SlickUI.Element.Text(0, 0, 'INVENTORY', null, style_default)).centerHorizontally();
 			
-			ui.inventory.panel.alpha = 0.8;
-			ui.inventory.panel.x = this.margin + 512;
+			ui.inventory.panel.alpha = .75;
+			ui.inventory.panel.x = this.margin + 256;
 		},
 		
 		//Toggle inventory display
@@ -50,13 +50,15 @@ var ui = {
 		},
 		
 		showInventory: function() {
-			
             game.add.tween(ui.inventory.panel).to( {x: ui.inventory.margin}, 500, Phaser.Easing.Exponential.Out, true);
+
+			//Bring UI to top
+			game.world.bringToTop(playState.groupUI);
 		},
 		
 		hideInventory: function() {
 			
-            game.add.tween(ui.inventory.panel).to( {x: 512 + ui.inventory.margin}, 500, Phaser.Easing.Exponential.Out, true);
+            game.add.tween(ui.inventory.panel).to( {x: 256 + ui.inventory.margin}, 500, Phaser.Easing.Exponential.Out, true);
 			
 		},
 		
@@ -72,8 +74,6 @@ var ui = {
 			ui.inventory.panel.add(icon = new SlickUI.Element.DisplayObject(this.padding,
 																		this.listStartY + this.padding * 2 + (numItems * this.entryHeight),
 																		item));
-			
-			console.log(item);
 			
 			ui.inventory.panel.add(entry = new SlickUI.Element.Text(this.padding * 2,
 																		this.listStartY + numItems * this.entryHeight + this.padding,

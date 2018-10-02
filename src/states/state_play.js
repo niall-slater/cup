@@ -25,6 +25,8 @@ var playState = {
 	
 	create: function() {
 		
+		this.groupUI = game.add.group();
+		
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 		game.time.desiredFps = 60;
         
@@ -81,8 +83,6 @@ var playState = {
 	
 	goToChunk: function(chunkX, chunkY, playerX, playerY) {
 		
-        //TODO: bug: on chunk change all actors are moved to within camera view
-        
 		this.currentChunkCoords = {x: chunkX, y: chunkY};
 		
 		//Start fading the screen
@@ -115,8 +115,7 @@ var playState = {
             }
 
 			this.player.moveTo(playerX, playerY);
-            
-			ui.inventory.init();
+			game.world.bringToTop(ui.inventory.panel.container.displayGroup.parent);
 		}, this);
 		
 	},
