@@ -23,7 +23,7 @@ var ui = {
 		margin: 12,
 		padding: 8,
 		listStartY: 28,
-		entryHeight: 24,
+		entryHeight: 18,
 		
 		init: function() {
 		
@@ -67,10 +67,17 @@ var ui = {
 			let numItems = this.items.length;
 			
 			let entry;
+			let icon;
 			
-			ui.inventory.panel.add(entry = new SlickUI.Element.Text(this.padding,
-																		this.listStartY + numItems * this.entryHeight,
-																		'item ' + numItems,
+			ui.inventory.panel.add(icon = new SlickUI.Element.DisplayObject(this.padding,
+																		this.listStartY + this.padding * 2 + (numItems * this.entryHeight),
+																		item));
+			
+			console.log(item);
+			
+			ui.inventory.panel.add(entry = new SlickUI.Element.Text(this.padding * 2,
+																		this.listStartY + numItems * this.entryHeight + this.padding,
+																		item.name,
 																		null,
 																		style_small));
 			
