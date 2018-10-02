@@ -115,11 +115,15 @@ class Monster extends Phaser.Sprite {
     }
 	
 	encounter() {
-		//console.log('ENCOUNTER');
+		this.attack();
 	}
 	
-	attack(direction) {
+	attack() {
         this.animations.play('attack', this.animSpeed * 2, false);
+		
+		if (playState.player.isNextTo(this)) {
+			playState.player.hurt(1);
+		}
 	}
 	
 	pushAwayFrom(actor, force) {

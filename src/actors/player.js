@@ -36,6 +36,8 @@ class Player extends Phaser.Sprite {
         this.KEY_INTERACT.onDown.add(this.toggleInventory.bind(this));
 		
 		this.health = 3;
+		this.invulnerableCooldown = 500; //in ms
+		this.invulnerable = false;
 		this.punchForce = 100;
 		
     }
@@ -69,15 +71,31 @@ class Player extends Phaser.Sprite {
     }
 	
 	hurt(amount) {
+		
+		if (this.invulnerable) {
+			return;
+		}
+		
 		this.health -= amount;
+		console.log('hurt player, health at ' + this.health);
 		
 		if (this.health <= 0) {
 			this.die();
+			return;
 		}
+		
+		this.tint = '0x00FF0030';
+		
+		this.invulnerable = true;
+		
+		game.time.events.add(this.invulnerableCooldown, () => {
+			this.invulnerable = false;
+			this.tint = '0xFFFFFF';
+		});
 	}
 	
     die() {
-        this.destroy();
+        console.log('YOU DEAD');
     }
 	
 	moveTo(x, y) {
