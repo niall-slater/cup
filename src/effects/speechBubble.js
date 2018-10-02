@@ -16,6 +16,8 @@ class SpeechBubble extends Phaser.Sprite {
         this.background = game.world.currentChunk.groupEffects.create(Math.floor(x-width/2)+1, Math.floor(y-height/2), 'ui_speechBubble_center');
         this.background.width = width-1;
         this.background.height = height;
+		
+		this.fadeDistance = 24;
         
         this.pieces = [];
         
@@ -45,13 +47,13 @@ class SpeechBubble extends Phaser.Sprite {
         for (var i = 0; i < this.pieces.length; i++) {
             this.pieces[i].x = Math.floor(this.pieces[i].x);
             this.pieces[i].y = Math.floor(this.pieces[i].y);
-			game.add.tween(this.pieces[i]).to( {alpha: 0}, this.lifeTime * 1000, Phaser.Easing.Exponential.In, true);
+			game.add.tween(this.pieces[i]).to( {alpha: 0, y: this.pieces[i].y-this.fadeDistance}, this.lifeTime * 1000, Phaser.Easing.Exponential.In, true);
         }
 		
 		this.phrase = game.add.text(this.x + this.padding, this.y + this.padding, text, style_small);
 		
-		game.add.tween(this.background).to( {alpha: 0}, this.lifeTime * 1000, Phaser.Easing.Exponential.In, true);
-		game.add.tween(this.phrase).to( {alpha: 0}, this.lifeTime * 1000, Phaser.Easing.Exponential.In, true);
+		game.add.tween(this.background).to( {alpha: 0, y: y-height/2-this.fadeDistance}, this.lifeTime * 1000, Phaser.Easing.Exponential.In, true);
+		game.add.tween(this.phrase).to( {alpha: 0, y: y-this.fadeDistance}, this.lifeTime * 1000, Phaser.Easing.Exponential.In, true);
 		
 		this.phrase.anchor.setTo(0.5, 0.5);
         

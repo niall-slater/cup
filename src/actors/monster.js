@@ -115,7 +115,7 @@ class Monster extends Phaser.Sprite {
     }
 	
 	encounter() {
-		console.log('ENCOUNTER');
+		//console.log('ENCOUNTER');
 	}
 	
 	attack(direction) {
@@ -126,7 +126,7 @@ class Monster extends Phaser.Sprite {
 		
 		let momentum = new Phaser.Point(force, force);
 		let vectorBetween = actor.body.position.subtract(this.body.position.x, this.body.position.y);
-		console.log(vectorBetween);
+//		console.log(vectorBetween);
 		vectorBetween.normalize();
 		
 		let punch = vectorBetween.multiply(momentum.x, momentum.y);
