@@ -18,7 +18,6 @@ var ui = {
 	inventory: {
 		
 		items: [],
-		items_entries: [],
 		displaying: false,
 		
 		margin: 12,
@@ -35,49 +34,46 @@ var ui = {
 			ui.inventory.panel.add(ui.inventory.panel.title = new SlickUI.Element.Text(0, 0, 'INVENTORY', null, style_default)).centerHorizontally();
 			
 			ui.inventory.panel.alpha = 0.8;
-			ui.inventory.panel.visible = false;
-			
-			this.buildItemList();
-		},
-		
-		buildItemList: function() {
-			//Build a list of items to display
-			//items[] is a list of actual items owned by the player
-			//items_entries[] is a list of UI display objects associated with items
-			
-			for(let i = 0; i < this.items.length; i++) {
-				let entry;
-				
-				//previous text objects are not being destroyed, they're overlapping. TODO: fix
-				
-				ui.inventory.panel.add(entry = new SlickUI.Element.Text(this.padding, this.listStartY + i * this.entryHeight, 'item ' + i, null, style_small));
-				
-				this.items_entries[i] = entry;
-			}
-			
-			console.log(this.items_entries);
+			ui.inventory.panel.x = this.margin + 512;
 		},
 		
 		//Toggle inventory display
 		toggle: function() {
 			if (this.displaying) {
-				this.destroyInventory();
+				this.hideInventory();
 				this.displaying = false;
 				
 			} else {
-				this.displayInventory();
+				this.showInventory();
 				this.displaying = true;
 			}
 		},
 		
-		//display inventory
-		displayInventory: function() {
-			ui.inventory.panel.visible = true;
+		showInventory: function() {
+			
+            game.add.tween(ui.inventory.panel).to( {x: ui.inventory.margin}, 500, Phaser.Easing.Exponential.Out, true);
 		},
 		
-		//destroy inventory
-		destroyInventory: function() {
-			ui.inventory.panel.visible = false;
+		hideInventory: function() {
+			
+            game.add.tween(ui.inventory.panel).to( {x: 512 + ui.inventory.margin}, 500, Phaser.Easing.Exponential.Out, true);
+			
 		},
+		
+		addItem: function(item) {
+			
+			this.items.push(item);
+			
+			let numItems = this.items.length;
+			
+			let entry;
+			
+			ui.inventory.panel.add(entry = new SlickUI.Element.Text(this.padding,
+																		this.listStartY + numItems * this.entryHeight,
+																		'item ' + numItems,
+																		null,
+																		style_small));
+			
+		}
 	}
 };

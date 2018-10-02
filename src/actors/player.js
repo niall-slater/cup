@@ -110,12 +110,10 @@ class Player extends Phaser.Sprite {
     }
 	
 	addToInventory(item) {
-		ui.inventory.items.push(item);
-		ui.inventory.buildItemList();
+		ui.inventory.addItem(item);
 	}
 	
 	toggleInventory() {
-		game.paused = !game.paused;
 		ui.inventory.toggle();
 	}
 };
