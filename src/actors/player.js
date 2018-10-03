@@ -23,7 +23,7 @@ class Player extends Phaser.Sprite {
         game.physics.arcade.enable(this);
 		this.body.setSize(14, 14, 1, 1);
     	this.body.drag = (25, 25);
-        this.body.mass = .01;
+        this.body.mass = 1;
     	this.body.collideWorldBounds = true;
 		
 		//this.animations.play('anim_walk', this.animSpeed, true);
@@ -34,7 +34,7 @@ class Player extends Phaser.Sprite {
         this.KEY_INTERACT.onDown.add(this.interact.bind(this));
 		
 		this.health = 3;
-		this.punchForce = 100;
+		this.attackForce = 100;
     }
     
     update() {
@@ -108,4 +108,16 @@ class Player extends Phaser.Sprite {
             return false;
         }
     }
+	
+	pushAwayFrom(actor, force) {
+		
+		let momentum = new Phaser.Point(force, force);
+		let vectorBetween = actor.body.position.subtract(this.body.position.x, this.body.position.y);
+		vectorBetween.normalize();
+		
+		let punch = vectorBetween.multiply(momentum.x, momentum.y);
+		console.log(punch);
+        this.body.velocity.subtract(punch.x, punch.y);
+	}
+	
 };

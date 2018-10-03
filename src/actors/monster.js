@@ -31,11 +31,13 @@ class Monster extends Phaser.Sprite {
 		this.body.bounce.x = 1;
 		this.body.bounce.y = 1;
         this.body.onCollide = new Phaser.Signal();
-        this.body.onCollide.add(this.encounter, this);
+        this.body.onCollide.add(this.collide, this);
         
         this.health = 2;
 		
 		game.time.events.add(Phaser.Timer.SECOND * Math.random() * 2, this.startWandering, this);
+        
+        this.attackForce = 5;
     }
 	
 	startWandering() {
@@ -71,7 +73,7 @@ class Monster extends Phaser.Sprite {
 		if (this.health <= 0) {
 			this.die();
 		}
-		this.pushAwayFrom(attacker, attacker.punchForce);
+		this.pushAwayFrom(attacker, attacker.attackForce);
 	}
 	
     die() {
@@ -114,23 +116,27 @@ class Monster extends Phaser.Sprite {
         this.animations.play('idle', this.animSpeed, true);
     }
 	
-	encounter() {
-		console.log('ENCOUNTER');
+	collide(me, other) {
+        if (other instanceof Player) {
+            me.attack(other);
+        }
+        
 	}
 	
-	attack(direction) {
+	attack(target) {
         this.animations.play('attack', this.animSpeed * 2, false);
+        
+        //target.pushAwayFrom(this, this.attackForce);
 	}
 	
 	pushAwayFrom(actor, force) {
 		
 		let momentum = new Phaser.Point(force, force);
 		let vectorBetween = actor.body.position.subtract(this.body.position.x, this.body.position.y);
-		console.log(vectorBetween);
 		vectorBetween.normalize();
 		
 		let punch = vectorBetween.multiply(momentum.x, momentum.y);
-		
+		console.log(punch);
         this.body.velocity.subtract(punch.x, punch.y);
 	}
 	
