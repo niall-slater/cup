@@ -125,9 +125,24 @@ class Monster extends Phaser.Sprite {
 	
 	attack(target) {
         this.animations.play('attack', this.animSpeed * 2, false);
-        
-        //target.pushAwayFrom(this, this.attackForce);
 	}
+       
+	/*
+	
+	//this is the (probably) garbage code that I put in because of a failed merge.
+	//TODO: check it's not needed then delete it
+	
+	encounter() {
+		this.attack();
+	}
+	
+	attack() {
+        this.animations.play('attack', this.animSpeed * 2, false);
+		
+		if (playState.player.isNextTo(this)) {
+			playState.player.hurt(1);
+		}
+	}*/
 	
 	pushAwayFrom(actor, force) {
 		
@@ -136,7 +151,6 @@ class Monster extends Phaser.Sprite {
 		vectorBetween.normalize();
 		
 		let punch = vectorBetween.multiply(momentum.x, momentum.y);
-		console.log(punch);
         this.body.velocity.subtract(punch.x, punch.y);
 	}
 	

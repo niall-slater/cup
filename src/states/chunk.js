@@ -37,6 +37,9 @@ class Chunk {
 		playState.player.bringToTop();
 		this.currentLayers[3].bringToTop();
 		game.world.bringToTop(this.groupEffects);
+		
+		//Bring UI to top
+		game.world.bringToTop(playState.groupUI);
         
     }
     
@@ -64,6 +67,16 @@ class Chunk {
             }
             case 'monster': {
                 this.groupActors.add(new Monster(
+                    game, item.x, item.y));
+                break;
+            }
+            case 'cup': {
+                this.groupItems.add(new Cup(
+                    game, item.x, item.y));
+                break;
+            }
+            case 'roast': {
+                this.groupItems.add(new Roast(
                     game, item.x, item.y));
                 break;
             }
@@ -109,6 +122,8 @@ class Chunk {
 		playState.player.bringToTop();
 		this.currentLayers[3].bringToTop();
 		game.world.bringToTop(this.groupEffects);
+		
+		game.world.bringToTop(ui.inventory.panel.container.displayGroup.parent);
     }
     
     getTileAtPixel(x, y, layer) {

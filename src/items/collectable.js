@@ -3,20 +3,23 @@ class Collectable extends Phaser.Sprite {
     constructor(game, x, y) {
         super(game, 0, 0);
 		
-		//Treat this as an abstract class - Collectables do not spawn.
+		this.collected = false;
+		//Treat this as an abstract class - do not create anything of class Collectable.
 	}
 	
 	update() {
 		
-		if (playState.player.isNextTo(this)) {
+		if (playState.player.isNextTo(this) && !this.collected) {
 			this.onCollect();
 		}
-		
 	}
 	
 	onCollect() {
-		playState.player.inventory.push(this);
-		console.log('Collected ' + this);
-		this.destroy();
+		this.collected = true;
+		
+		playState.world.currentChunk.groupItems.remove(this);
+		playState.groupUI.add(this);
+		
+		playState.player.addToInventory(this);
 	}
 }

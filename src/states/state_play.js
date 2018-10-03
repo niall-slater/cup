@@ -7,6 +7,9 @@ var playState = {
 	world: {},
 	currentChunkCoords: {x: 1, y: 1},
 	
+	/* Play state paused (for menus and stuff) */
+	paused: false,
+	
 	/* Chunk transition effect */
 	chunkTransitionPlaying: false,
 	chunkTransitionSpeed: 350,
@@ -16,10 +19,13 @@ var playState = {
 	},
 	
 	preload: function() {
+		slickUI.load('res/slickUI/kenney/kenney.json');
 		
 	},
 	
 	create: function() {
+		
+		this.groupUI = game.add.group();
 		
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 		game.time.desiredFps = 60;
@@ -48,7 +54,7 @@ var playState = {
 		game.camera.y = this.player.y;
     	game.camera.deadzone = new Phaser.Rectangle(96, 96, 64, 64);
 		
-		this.ui = game.add.group();
+		ui.inventory.init();
 	},
 	
 	update: function() {
@@ -77,8 +83,6 @@ var playState = {
 	
 	goToChunk: function(chunkX, chunkY, playerX, playerY) {
 		
-        //TODO: bug: on chunk change all actors are moved to within camera view
-        
 		this.currentChunkCoords = {x: chunkX, y: chunkY};
 		
 		//Start fading the screen
@@ -109,9 +113,11 @@ var playState = {
                 this.world.currentChunk = new Chunk(game, newChunkID);
                 this.world.chunkMap[newChunkCoords.y][newChunkCoords.x] = this.world.currentChunk;
             }
+			
+			//Move the player to the right position and bring the UI back on top
 
 			this.player.moveTo(playerX, playerY);
-            
+			game.world.bringToTop(ui.inventory.panel.container.displayGroup.parent);
 		}, this);
 		
 	},
