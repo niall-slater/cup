@@ -125,6 +125,7 @@ class Monster extends Phaser.Sprite {
 	
 	attack(target) {
         this.animations.play('attack', this.animSpeed * 2, false);
+		target.hurt(1);
 	}
        
 	/*
