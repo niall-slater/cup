@@ -52,7 +52,13 @@ var loadState = {
 		game.load.image('ui_speechBubble_bottomright', 'res/sprites/ui/speechBubble9/bottomright.png');
 		game.load.image('ui_speechBubble_tail', 'res/sprites/ui/speechBubble9/tail.png');
         game.load.spritesheet('characters_roguelike', 'res/sprites/ui/ui_sheet.png', 16, 16, maxChars, 0, 0);
+		
+		game.load.image('enc_background', 'res/sprites/ui/enc_background.png');
+		game.load.image('enc_player', 'res/sprites/ui/enc_player.png');
         
+		//Encounter monster sprites
+		game.load.image('enc_monster_0', 'res/sprites/characters/enc_monster_0.png');
+		
 		
 		//Effect sprites
 		game.load.image('effect_smoke', 'res/sprites/effects/smoke.png');
