@@ -128,8 +128,8 @@
                  "type":"cup",
                  "visible":true,
                  "width":0,
-                 "x":353.333,
-                 "y":227.333
+                 "x":217.999666666667,
+                 "y":263.999666666667
                 }, 
                 {
                  "height":0,
@@ -140,8 +140,8 @@
                  "type":"cup",
                  "visible":true,
                  "width":0,
-                 "x":392.667,
-                 "y":212.667
+                 "x":220.000333333333,
+                 "y":233.333666666667
                 }, 
                 {
                  "height":0,
@@ -152,8 +152,8 @@
                  "type":"cup",
                  "visible":true,
                  "width":0,
-                 "x":435.333,
-                 "y":213.333
+                 "x":219.333,
+                 "y":201.333
                 }, 
                 {
                  "height":0,
@@ -164,8 +164,44 @@
                  "type":"roast",
                  "visible":true,
                  "width":0,
-                 "x":322,
-                 "y":274
+                 "x":213.333333333333,
+                 "y":312
+                }, 
+                {
+                 "height":0,
+                 "id":38,
+                 "name":"monster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":27.3333333333333,
+                 "y":163.333333333333
+                }, 
+                {
+                 "height":0,
+                 "id":39,
+                 "name":"monster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":54.6666666666667,
+                 "y":122.666666666667
+                }, 
+                {
+                 "height":0,
+                 "id":40,
+                 "name":"monster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"monster",
+                 "visible":true,
+                 "width":0,
+                 "x":56,
+                 "y":186
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -195,7 +231,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":38,
+ "nextobjectid":41,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.1.5",
