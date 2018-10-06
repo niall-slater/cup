@@ -58,6 +58,9 @@ var loadState = {
         
 		//Encounter monster sprites
 		game.load.image('enc_monster_0', 'res/sprites/characters/enc_monster_0.png');
+		game.load.spritesheet('enc_monster_legs', 'res/sprites/characters/enc_monster_legs.png', 64, 64, undefined, 0, 0);
+		game.load.spritesheet('enc_monster_bodies', 'res/sprites/characters/enc_monster_bodies.png', 64, 64, undefined, 0, 0);
+		game.load.spritesheet('enc_monster_heads', 'res/sprites/characters/enc_monster_heads.png', 64, 64, undefined, 0, 0);
 		
 		
 		//Effect sprites

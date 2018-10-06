@@ -93,7 +93,7 @@ var ui = {
 		menuHeight: 64,
 		buttonWidth: 76,
 		
-		position_monster: {x: 144, y: 32},
+		position_monster: {x: 144, y: 64},
 		
 		delay: 600,
 		tweenDistance: 128,
@@ -108,10 +108,19 @@ var ui = {
 			game.camera.y = 0;
 			game.camera.unfollow();
 			
+			let numSprites = 5;
+			let legsSelection, bodySelection, headSelection;
+			legsSelection = Math.floor(Math.random() * numSprites);
+			bodySelection = Math.floor(Math.random() * numSprites);
+			headSelection = Math.floor(Math.random() * numSprites);
+			
 			//Create sprites
 			this.sprite_background = game.add.sprite(0, 0, 'enc_background');
 			this.sprite_player = game.add.sprite(16, gameHeight - 116, 'enc_player');
-			this.sprite_monster = game.add.sprite(this.position_monster.x + this.tweenDistance, this.position_monster.y, 'enc_monster_0');
+			this.sprite_monster = [];
+			this.sprite_monster.push(game.add.sprite(this.position_monster.x + this.tweenDistance, this.position_monster.y, 'enc_monster_bodies', bodySelection));
+			this.sprite_monster.push(game.add.sprite(this.position_monster.x + this.tweenDistance, this.position_monster.y, 'enc_monster_legs', legsSelection));
+			this.sprite_monster.push(game.add.sprite(this.position_monster.x + this.tweenDistance, this.position_monster.y, 'enc_monster_heads', headSelection));
 
 			//Create menu
 			slickUI.add(this.menu = new SlickUI.Element.Panel(
@@ -139,7 +148,9 @@ var ui = {
 		
 		tweenInUI: function() {
 			//Tween in the monster
-			game.add.tween(this.sprite_monster).to( {x: this.position_monster.x}, 500, Phaser.Easing.Cubic.Out, true);
+			this.sprite_monster.forEach((element)=>{
+				game.add.tween(element).to( {x: this.position_monster.x}, 500, Phaser.Easing.Cubic.Out, true);
+			});
 			
 			//Tween in the menu after a delay
 			game.time.events.add(this.delay, () => {
