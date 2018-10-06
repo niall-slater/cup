@@ -8,29 +8,37 @@ class Monster extends Phaser.Sprite {
         
         this.anchor.setTo(0.5, 0.5);
 		
-		this.animSpeed = 2;
+		this.animSpeed = 4;
 		this.moveSpeed = 40;
 		
 		this.moveTarget = null;
 		
 		this.animations.add('idle', [0, 1]);
-		this.animations.add('walk', [0, 1]);
-		this.animations.add('jump', [0, 1, 2]);
+		this.animations.add('walk', [1, 2]);
+		this.animations.add('jump', [1, 2, 3]);
+		this.animations.add('hurt', [3, 1, 0]);
+		this.animations.add('attack', [1, 5, 6]);
 		
 		
         game.add.existing(this);
         game.physics.arcade.enable(this);
 		this.body.setSize(8, 8, 4, 4);
-        this.body.mass = -10;
+        this.body.mass = 25;
         this.body.immovable = false;
+		this.body.drag = new Phaser.Point(100, 100);
     	this.body.collideWorldBounds = false;  
 		
         this.animations.play('idle', this.animSpeed, true);
+		this.body.bounce.x = 1;
+		this.body.bounce.y = 1;
         this.body.onCollide = new Phaser.Signal();
-        this.body.onCollide.add(this.encounter, this);
+        this.body.onCollide.add(this.collide, this);
         
-        
+        this.health = 2;
+		
 		game.time.events.add(Phaser.Timer.SECOND * Math.random() * 2, this.startWandering, this);
+        
+        this.attackForce = 5;
     }
 	
 	startWandering() {
@@ -44,8 +52,8 @@ class Monster extends Phaser.Sprite {
 		
     }
 	
-	onInteract() {
-        this.die();
+	onInteract(actor) {
+        this.hurt(1, actor);
     }
     
 	moveTo(posX, posY) {
@@ -58,6 +66,15 @@ class Monster extends Phaser.Sprite {
             this.scale.x = 1;
         }
         
+	}
+	
+	hurt(amount, attacker) {
+		this.health -= amount;
+        this.animations.play('hurt', this.animSpeed * 2, false);
+		if (this.health <= 0) {
+			this.die();
+		}
+		this.pushAwayFrom(attacker, attacker.attackForce);
 	}
 	
     die() {
@@ -100,8 +117,43 @@ class Monster extends Phaser.Sprite {
         this.animations.play('idle', this.animSpeed, true);
     }
 	
+	collide(me, other) {
+        if (other instanceof Player) {
+            me.attack(other);
+        }
+        
+	}
+	
+	attack(target) {
+        this.animations.play('attack', this.animSpeed * 2, false);
+		target.hurt(1);
+	}
+       
+	/*
+	
+	//this is the (probably) garbage code that I put in because of a failed merge.
+	//TODO: check it's not needed then delete it
+	
 	encounter() {
-		console.log('ENCOUNTER');
+		this.attack();
+	}
+	
+	attack() {
+        this.animations.play('attack', this.animSpeed * 2, false);
+		
+		if (playState.player.isNextTo(this)) {
+			playState.player.hurt(1);
+		}
+	}*/
+	
+	pushAwayFrom(actor, force) {
+		
+		let momentum = new Phaser.Point(force, force);
+		let vectorBetween = actor.body.position.subtract(this.body.position.x, this.body.position.y);
+		vectorBetween.normalize();
+		
+		let punch = vectorBetween.multiply(momentum.x, momentum.y);
+        this.body.velocity.subtract(punch.x, punch.y);
 	}
 	
 }

@@ -2,20 +2,6 @@
 let menuMain = {};
 let menuStart = {};
 
-
-//UI values
-let uiSize = {
-	buttonWidth: 128,
-	buttonHeight: 32,
-	margin: 4,
-	panelX: 4,
-	panelY: 72,
-	panelWidth: 480-8,
-	panelHeight: 270-78
-};
-
-let style_default = { font: "14px VT323", fill: "#000", wordWrap: "true", wordWrapWidth: 330};
-
 var menuState = {
 	
 	preload: function() {

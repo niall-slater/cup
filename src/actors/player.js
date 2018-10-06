@@ -10,8 +10,6 @@ class Player extends Phaser.Sprite {
 		
 		this.animSpeed = 4;
 		this.moveSpeed = 120;
-		
-		this.inventory = [];
         
 		/*
         this.anim_idle = this.animations.add('anim_idle', [0]);
@@ -22,16 +20,27 @@ class Player extends Phaser.Sprite {
         game.add.existing(this);
         game.physics.arcade.enable(this);
 		this.body.setSize(14, 14, 1, 1);
-    	this.body.drag = 50;
-        this.body.mass = 5;
+    	this.body.drag = (25, 25);
+        this.body.mass = 1;
     	this.body.collideWorldBounds = true;
 		
 		//this.animations.play('anim_walk', this.animSpeed, true);
         
+		
         /* KEYBOARD INPUT */
         
         this.KEY_INTERACT = game.input.keyboard.addKey(Phaser.Keyboard.X);
         this.KEY_INTERACT.onDown.add(this.interact.bind(this));
+		
+        this.KEY_INTERACT = game.input.keyboard.addKey(Phaser.Keyboard.Z);
+        this.KEY_INTERACT.onDown.add(this.toggleInventory.bind(this));
+		
+		this.health = 3;
+		this.attackForce = 100;
+		this.invulnerableCooldown = 500; //in ms
+		this.invulnerable = false;
+		this.punchForce = 100;
+		
     }
     
     update() {
@@ -62,8 +71,32 @@ class Player extends Phaser.Sprite {
 		}
     }
 	
+	hurt(amount) {
+		
+		if (this.invulnerable) {
+			return;
+		}
+		
+		this.health -= amount;
+		console.log('hurt player, health at ' + this.health);
+		
+		if (this.health <= 0) {
+			this.die();
+			return;
+		}
+		
+		this.tint = '0x00FF0030';
+		
+		this.invulnerable = true;
+		
+		game.time.events.add(this.invulnerableCooldown, () => {
+			this.invulnerable = false;
+			this.tint = '0xFFFFFF';
+		});
+	}
+	
     die() {
-        this.destroy();
+        console.log('YOU DEAD');
     }
 	
 	moveTo(x, y) {
@@ -72,27 +105,45 @@ class Player extends Phaser.Sprite {
 	}
 	
     interact() {
-        
         for (let i = 0; i < playState.world.currentChunk.groupActors.children.length; i++) {
             let actor = playState.world.currentChunk.groupActors.children[i];
             if (actor === this) {
                 continue;
             }
             if (this.isNextTo(actor)) {
-                actor.onInteract();
+                actor.onInteract(this);
                 return;
             }
         }
 		
-		//Test
-		console.log(this.inventory);
     }
     
     isNextTo(sprite) {
-        if (Math.abs(this.x - sprite.x) < 16 && Math.abs(this.y - sprite.y) < 16) {
+		let range = 25;
+		
+        if (Math.abs(this.x - sprite.x) < range && Math.abs(this.y - sprite.y) < range) {
             return true;
         } else {
             return false;
         }
     }
+	
+	pushAwayFrom(actor, force) {
+		
+		let momentum = new Phaser.Point(force, force);
+		let vectorBetween = actor.body.position.subtract(this.body.position.x, this.body.position.y);
+		vectorBetween.normalize();
+		
+		let punch = vectorBetween.multiply(momentum.x, momentum.y);
+		console.log(punch);
+        this.body.velocity.subtract(punch.x, punch.y);
+	}
+	
+	addToInventory(item) {
+		ui.inventory.addItem(item);
+	}
+	
+	toggleInventory() {
+		ui.inventory.toggle();
+	}
 };
