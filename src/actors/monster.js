@@ -15,7 +15,7 @@ class Monster extends Phaser.Sprite {
 		
 		this.animations.add('idle', [0, 1]);
 		this.animations.add('walk', [0, 1]);
-		this.animations.add('jump', [1, 2]);
+		this.animations.add('jump', [0, 1, 2]);
 		
 		
         game.add.existing(this);
