@@ -186,6 +186,8 @@ var playState = {
 		this.world.currentChunk.hiddenForEncounter = true;
 		this.world.currentChunk.disable();
 		
+		ui.encounter.init();
+		
 	},
 	
 	updateEncounter: function() {

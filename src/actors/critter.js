@@ -74,6 +74,9 @@ class Critter extends Phaser.Sprite {
     }
     
     wander() {
+		if (playState.encounterPlaying) {
+			return;
+		}
         this.stopMoving();
         
         let wanderX = (-7 + Math.floor(Math.random() * 14)) * 10;

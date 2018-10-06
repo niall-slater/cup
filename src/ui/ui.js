@@ -83,5 +83,24 @@ var ui = {
 																		style_small));
 			
 		}
+	},
+	
+	encounter: {
+		
+		margin: 12,
+		padding: 12,
+		listStartY: 0,
+		entryHeight: 18,
+		
+		init: function() {
+		
+			//Create inventory panel
+			slickUI.add(ui.encounter.panel = new SlickUI.Element.Panel(this.margin, this.margin, gameWidth - this.margin*2, gameHeight - this.margin*2));
+
+			//Title
+			ui.encounter.panel.add(ui.encounter.panel.title = new SlickUI.Element.Text(0, 0, 'ENCOUNTER', null, style_default)).centerHorizontally();
+			
+		},
+		
 	}
 };
