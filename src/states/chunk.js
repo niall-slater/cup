@@ -3,7 +3,6 @@ class Chunk {
     constructor(game, chunkID) {
 		
         this.chunkID = chunkID;
-        
         //Bind class methods
         this.createFromObject = this.createFromObject.bind(this);
         
@@ -40,7 +39,12 @@ class Chunk {
 		
 		//Bring UI to top
 		game.world.bringToTop(playState.groupUI);
-        
+		
+		//Add night-time overlay
+		this.night = this.groupEffects.create(0, 0, 'effect_night');
+		this.night.fixedToCamera = true;
+		this.night.alpha = 0.5;
+		this.night.visible = playState.isNightTime;
     }
     
     update() {
@@ -124,6 +128,9 @@ class Chunk {
 		game.world.bringToTop(this.groupEffects);
 		
 		game.world.bringToTop(ui.inventory.panel.container.displayGroup.parent);
+		
+		//Turn on night effects if it's night-time
+		this.night.visible = playState.isNightTime;
     }
     
     getTileAtPixel(x, y, layer) {

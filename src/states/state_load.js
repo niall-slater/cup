@@ -56,6 +56,7 @@ var loadState = {
 		
 		//Effect sprites
 		game.load.image('effect_smoke', 'res/sprites/effects/smoke.png');
+		game.load.image('effect_night', 'res/sprites/effects/night.png');
 		
 		/* TILEMAPS */
 		

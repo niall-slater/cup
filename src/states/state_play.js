@@ -14,6 +14,9 @@ var playState = {
 	chunkTransitionPlaying: false,
 	chunkTransitionSpeed: 350,
 	
+	/* Day/Night cycle */
+	isNightTime: false,
+	
 	init: function(mapIndexes) {
 		this.world.mapIndexes = mapIndexes;
 	},
