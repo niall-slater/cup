@@ -118,8 +118,8 @@ var ui = {
 			this.sprite_background = game.add.sprite(0, 0, 'enc_background');
 			this.sprite_player = game.add.sprite(16, gameHeight - 116, 'enc_player');
 			this.sprite_monster = [];
-			this.sprite_monster.push(game.add.sprite(this.position_monster.x + this.tweenDistance, this.position_monster.y, 'enc_monster_bodies', bodySelection));
 			this.sprite_monster.push(game.add.sprite(this.position_monster.x + this.tweenDistance, this.position_monster.y, 'enc_monster_legs', legsSelection));
+			this.sprite_monster.push(game.add.sprite(this.position_monster.x + this.tweenDistance, this.position_monster.y, 'enc_monster_bodies', bodySelection));
 			this.sprite_monster.push(game.add.sprite(this.position_monster.x + this.tweenDistance, this.position_monster.y, 'enc_monster_heads', headSelection));
 
 			//Create menu
