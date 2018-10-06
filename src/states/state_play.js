@@ -202,6 +202,9 @@ var playState = {
 		game.camera.follow(this.player, .2, .2);
 		game.camera.x = this.player.x;
 		game.camera.y = this.player.y;
+		
+		game.world.currentChunk.enable();
+		this.encounterPlaying = false;
 	}
 	
 };
