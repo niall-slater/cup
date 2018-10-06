@@ -45,6 +45,9 @@ class Chunk {
 		this.night.fixedToCamera = true;
 		this.night.alpha = 0.5;
 		this.night.visible = playState.isNightTime;
+		
+		//Encounter visibility flag
+		this.hiddenForEncounter = false;
     }
     
     update() {

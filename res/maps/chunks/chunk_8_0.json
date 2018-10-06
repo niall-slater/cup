@@ -44,56 +44,8 @@
                  "type":"speaker",
                  "visible":true,
                  "width":0,
-                 "x":323,
-                 "y":218
-                }, 
-                {
-                 "height":0,
-                 "id":29,
-                 "name":"barry",
-                 "point":true,
-                 "rotation":0,
-                 "type":"monster",
-                 "visible":true,
-                 "width":0,
-                 "x":217.333333333333,
-                 "y":137.333333333333
-                }, 
-                {
-                 "height":0,
-                 "id":30,
-                 "name":"barry",
-                 "point":true,
-                 "rotation":0,
-                 "type":"monster",
-                 "visible":true,
-                 "width":0,
-                 "x":363.333333333333,
-                 "y":158.666666666667
-                }, 
-                {
-                 "height":0,
-                 "id":31,
-                 "name":"barry",
-                 "point":true,
-                 "rotation":0,
-                 "type":"monster",
-                 "visible":true,
-                 "width":0,
-                 "x":427.333333333333,
-                 "y":344
-                }, 
-                {
-                 "height":0,
-                 "id":32,
-                 "name":"barry",
-                 "point":true,
-                 "rotation":0,
-                 "type":"monster",
-                 "visible":true,
-                 "width":0,
-                 "x":272.666666666667,
-                 "y":208.666666666667
+                 "x":283.666666666667,
+                 "y":84.6666666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -123,7 +75,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":33,
+ "nextobjectid":36,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.1.5",

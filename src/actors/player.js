@@ -29,11 +29,11 @@ class Player extends Phaser.Sprite {
 		
         /* KEYBOARD INPUT */
         
-        this.KEY_INTERACT = game.input.keyboard.addKey(Phaser.Keyboard.X);
-        this.KEY_INTERACT.onDown.add(this.interact.bind(this));
+        this.KEY_X = game.input.keyboard.addKey(Phaser.Keyboard.X);
+        this.KEY_X.onDown.add(this.onPressX.bind(this));
 		
-        this.KEY_INTERACT = game.input.keyboard.addKey(Phaser.Keyboard.Z);
-        this.KEY_INTERACT.onDown.add(this.toggleInventory.bind(this));
+        this.KEY_Z = game.input.keyboard.addKey(Phaser.Keyboard.Z);
+        this.KEY_Z.onDown.add(this.onPressZ.bind(this));
 		
 		this.health = 3;
 		this.attackForce = 100;
@@ -41,9 +41,36 @@ class Player extends Phaser.Sprite {
 		this.invulnerable = false;
 		this.punchForce = 100;
 		
+		
+		cursors.left.onDown.add( () => { 
+			this.onPressCursor('left');
+		} );
+		cursors.right.onDown.add( () => { 
+			this.onPressCursor('right');
+		} );
+		cursors.up.onDown.add( () => { 
+			this.onPressCursor('up');
+		} );
+		cursors.down.onDown.add( () => { 
+			this.onPressCursor('down');
+		} );
+		
     }
     
     update() {
+		
+		if (playState.encounterPlaying) {
+			this.updateInEncounter();
+		} else {
+			this.updateInOverworld();
+		}
+    }
+	
+	updateInEncounter() {
+		
+	}
+	
+	updateInOverworld() {
 		
     	this.body.velocity.x = 0;
     	this.body.velocity.y = 0;
@@ -69,34 +96,35 @@ class Player extends Phaser.Sprite {
 		{
 			this.body.velocity.y = this.moveSpeed;
 		}
-    }
+		
+		//Tile sprite indexes for triggering encounters:
+		//593 = long grass
+		//650 = longer grass
+		
+		let tileCheck = playState.world.currentChunk.getTileAtPixel(this.x, this.y, 'under-overlay');
+		let encounterChance = 0.03;
+		
+		if (tileCheck != null) {
+			let index = tileCheck.index;
+			if (index === 593 || index === 650) {
+				if (Math.random() < encounterChance) {
+					playState.startEncounter();
+					console.log("ENCOUNTER");
+				}
+			}
+		}
+	}
 	
 	hurt(amount) {
+        console.log('Hurt player');
 		
 		if (this.invulnerable) {
 			return;
 		}
-		
-		this.health -= amount;
-		console.log('hurt player, health at ' + this.health);
-		
-		if (this.health <= 0) {
-			this.die();
-			return;
-		}
-		
-		this.tint = '0x00FF0030';
-		
-		this.invulnerable = true;
-		
-		game.time.events.add(this.invulnerableCooldown, () => {
-			this.invulnerable = false;
-			this.tint = '0xFFFFFF';
-		});
 	}
 	
     die() {
-        console.log('YOU DEAD');
+        console.log('Player died');
     }
 	
 	moveTo(x, y) {
@@ -104,19 +132,51 @@ class Player extends Phaser.Sprite {
 		this.y = y;
 	}
 	
-    interact() {
-        for (let i = 0; i < playState.world.currentChunk.groupActors.children.length; i++) {
-            let actor = playState.world.currentChunk.groupActors.children[i];
-            if (actor === this) {
-                continue;
-            }
-            if (this.isNextTo(actor)) {
-                actor.onInteract(this);
-                return;
-            }
-        }
+	onPressX() {
 		
-    }
+		if (playState.encounterPlaying) {
+			//Pressed X during an encounter
+			console.log('x in encounter');
+		} else {
+			//Pressed X in the overworld
+			for (let i = 0; i < playState.world.currentChunk.groupActors.children.length; i++) {
+				let actor = playState.world.currentChunk.groupActors.children[i];
+				if (actor === this) {
+					continue;
+				}
+				if (this.isNextTo(actor)) {
+					actor.onInteract(this);
+					return;
+				}
+			}
+		}
+	}
+	
+	onPressZ() {
+		
+		if (playState.encounterPlaying) {
+			//Pressed Z during an encounter
+			console.log('z in encounter');
+		} else {
+			//Pressed Z in the overworld
+			this.toggleInventory();
+		}
+	}
+	
+	onPressCursor(direction) {
+		if (!playState.encounterPlaying) {
+			//We're in the overworld - do nothing, because cursors are handled in UpdateInOverworld
+			//This is because in overworld we use bools and in encounters we use Phaser Signals
+			return;
+		}
+		
+		switch(direction) {
+			case 'up': console.log('up'); break;
+			case 'down': console.log('down'); break;
+			case 'left': console.log('left'); break;
+			case 'right': console.log('right'); break;
+		}
+	}
     
     isNextTo(sprite) {
 		let range = 25;
@@ -146,4 +206,5 @@ class Player extends Phaser.Sprite {
 	toggleInventory() {
 		ui.inventory.toggle();
 	}
+	
 };

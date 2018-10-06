@@ -17,6 +17,9 @@ var playState = {
 	/* Day/Night cycle */
 	isNightTime: false,
 	
+	/* Encounter flags */
+	encounterPlaying: false,
+	
 	init: function(mapIndexes) {
 		this.world.mapIndexes = mapIndexes;
 	},
@@ -34,8 +37,8 @@ var playState = {
 		game.time.desiredFps = 60;
         
         //Create player
-		this.player = new Player(game, 186, 250);
     	cursors = game.input.keyboard.createCursorKeys();
+		this.player = new Player(game, 186, 250);
         
 		//Create map
         this.world.chunkMap = [
@@ -61,6 +64,16 @@ var playState = {
 	},
 	
 	update: function() {
+		
+		if (this.chunkTransitionPlaying) {
+			return;
+		}
+		
+		if (this.encounterPlaying) {
+			this.updateEncounter();
+			return;
+		}
+		
         this.world.currentChunk.update();
         this.handleWorldCollision();
 	},
@@ -126,10 +139,6 @@ var playState = {
 	},
     
     handleWorldCollision: function() {
-		
-		if (this.chunkTransitionPlaying) {
-			return;
-		}
         
         game.physics.arcade.collide(this.player, this.world.currentChunk.currentLayers[2]);
         game.physics.arcade.collide(this.world.currentChunk.groupActors, this.world.currentChunk.currentLayers[2]);
@@ -149,6 +158,37 @@ var playState = {
 			if (this.currentChunkCoords.y < 3)
 				this.goToChunk(this.currentChunkCoords.x, this.currentChunkCoords.y + 1, this.player.x, 18);
 		}
-    }
+    },
+	
+	/* ENCOUNTER CODE */
+	
+	startEncounter: function() {
+		
+		//Begin an encounter between the player and foe
+		
+		//set flags to prevent other encounters triggering in the background
+		//stop creature wandering if possible
+		//disable rendering of tilemap and effects
+		//switch player input to encounter mode
+		//set encounter ui to visible
+		//set sprites and data to the ones for this new encounter
+			//OR INSTEAD
+			//save playState information
+			//switch to encounter state
+			//handle everything there instead
+			//but this would need some refactoring of the create code and could cause bugs
+		
+		//lets try implementing it in playstate for starters
+		
+		this.encounterPlaying = true;
+		playState.player.body.velocity.x = 0;
+		playState.player.body.velocity.y = 0;
+		this.world.currentChunk.hiddenForEncounter = true;
+		this.world.currentChunk.disable();
+		
+	},
+	
+	updateEncounter: function() {
+	}
 	
 };

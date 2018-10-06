@@ -118,7 +118,8 @@ class Monster extends Phaser.Sprite {
 	
 	collide(me, other) {
         if (other instanceof Player) {
-            me.attack(other);
+			console.log(me + 'Collided with player');
+			playState.startEncounter(me);
         }
         
 	}
@@ -127,23 +128,6 @@ class Monster extends Phaser.Sprite {
         this.animations.play('attack', this.animSpeed * 2, false);
 		target.hurt(1);
 	}
-       
-	/*
-	
-	//this is the (probably) garbage code that I put in because of a failed merge.
-	//TODO: check it's not needed then delete it
-	
-	encounter() {
-		this.attack();
-	}
-	
-	attack() {
-        this.animations.play('attack', this.animSpeed * 2, false);
-		
-		if (playState.player.isNextTo(this)) {
-			playState.player.hurt(1);
-		}
-	}*/
 	
 	pushAwayFrom(actor, force) {
 		
