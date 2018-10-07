@@ -48,6 +48,10 @@ class Chunk {
 		
 		//Encounter visibility flag
 		this.hiddenForEncounter = false;
+		
+		this.groupItems.add(new Roast(game, playState.player.x, playState.player.y));
+		this.groupItems.add(new Roast(game, playState.player.x, playState.player.y));
+		this.groupItems.add(new Roast(game, playState.player.x, playState.player.y));
     }
     
     update() {

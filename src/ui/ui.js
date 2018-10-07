@@ -35,6 +35,9 @@ var ui = {
 			
 			ui.inventory.panel.alpha = .95;
 			ui.inventory.panel.x = this.margin + 256;
+			
+			ui.inventory.panel.icons = [];
+			ui.inventory.panel.entries = [];
 		},
 		
 		//Toggle inventory display
@@ -73,34 +76,39 @@ var ui = {
 		addEntryToList: function(item) {
 			let numItems = this.items.length;
 			
-			let entry;
 			let icon;
+			let entry;
 			
+			ui.inventory.panel.add(icon = new SlickUI.Element.DisplayObject(this.padding, Math.floor(this.listStartY + this.padding * 2 + (numItems * this.entryHeight - 2)), item));
 			
-			ui.inventory.panel.add(icon = new SlickUI.Element.DisplayObject(
-				this.padding, 
-				Math.floor(this.listStartY + this.padding * 2 + (numItems * this.entryHeight - 2)),
-				item));
+			ui.inventory.panel.add(entry = new SlickUI.Element.Text(Math.floor(this.padding * 2), Math.floor(this.listStartY + numItems * this.entryHeight + this.padding), item.name, null, style_small));
 			
-			ui.inventory.panel.add(entry = new SlickUI.Element.Text(
-				Math.floor(this.padding * 2),
-				Math.floor(this.listStartY + numItems * this.entryHeight + this.padding),
-				item.name,
-				null,
-				style_small));
+			ui.inventory.panel.icons.push(icon);
+			ui.inventory.panel.entries.push(entry);
+		},
+		
+		rebuildPanel: function() {
+			for (let i = 0; i < ui.inventory.panel.icons.length; i++) {
+				ui.inventory.panel.remove(ui.inventory.panel.icons[i]);
+			}
+			ui.inventory.panel.icons = [];
+			
+			for (let i = 0; i < ui.inventory.panel.entries.length; i++) {
+				ui.inventory.panel.remove(ui.inventory.panel.entries[i]);
+			}
+			ui.inventory.panel.entries = [];
+
+			for (let i = 0; i < this.items.length; i++) {
+				ui.inventory.addEntryToList(ui.inventory.items[i]);
+			}
+			
 		},
 		
 		removeItem: function(item) {
 			
 			this.items.splice(this.items.indexOf(item), 1);
-			console.log(this.items);
 			
-//			ui.inventory.panel.destroy();
-//			ui.inventory.init();
-//
-//			for (let i = 0; i < this.items.length; i++) {
-//				ui.inventory.addEntryToList(this.items[i]);
-//			}
+			ui.inventory.rebuildPanel();
 			
 		}
 	},
@@ -202,7 +210,7 @@ var ui = {
 		rebuildFoodList: function() {
 			
 			for (let i = 0; i < this.menuFood.entries.length; i++) {
-				this.menuFood.entries[i].destroy();
+				this.menuFood.remove(this.menuFood.entries[i]);
 			}
 			
 			this.menuFood.entries = [];

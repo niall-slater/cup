@@ -166,6 +166,8 @@ var playState = {
 		
 		//Begin an encounter between the player and foe
 		
+		ui.inventory.hideInventory();
+		
 		this.encounterPlaying = true;
 		playState.player.body.velocity.x = 0;
 		playState.player.body.velocity.y = 0;
@@ -176,7 +178,6 @@ var playState = {
 			this.world.currentChunk.disable();
 			ui.encounter.init();
 		}, this);
-		
 	},
 	
 	updateEncounter: function() {

@@ -18,7 +18,7 @@ class Collectable extends Phaser.Sprite {
 		this.collected = true;
 		
 		playState.world.currentChunk.groupItems.remove(this);
-		playState.groupUI.add(this);
+		//playState.groupUI.add(this);
 		
 		playState.player.addToInventory(this);
 	}
