@@ -68,8 +68,8 @@
                  "type":"roast",
                  "visible":true,
                  "width":0,
-                 "x":298,
-                 "y":476
+                 "x":186.666666666667,
+                 "y":210.666666666667
                 }, 
                 {
                  "height":0,
@@ -106,6 +106,18 @@
                  "width":0,
                  "x":335.333,
                  "y":122.667
+                }, 
+                {
+                 "height":0,
+                 "id":41,
+                 "name":"roast",
+                 "point":true,
+                 "rotation":0,
+                 "type":"roast",
+                 "visible":true,
+                 "width":0,
+                 "x":296,
+                 "y":464
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -135,7 +147,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":41,
+ "nextobjectid":42,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.1.5",

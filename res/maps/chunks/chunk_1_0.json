@@ -34,7 +34,7 @@
                  "point":true,
                  "properties":
                     {
-                     "phrase":"this is the fort"
+                     "phrase":"Couldn't be safer. Trust me."
                     },
                  "propertytypes":
                     {
@@ -44,8 +44,88 @@
                  "type":"speaker",
                  "visible":true,
                  "width":0,
-                 "x":274,
-                 "y":459
+                 "x":294.5,
+                 "y":401
+                }, 
+                {
+                 "height":0,
+                 "id":27,
+                 "name":"villager",
+                 "point":true,
+                 "properties":
+                    {
+                     "phrase":"I hate logging duty."
+                    },
+                 "propertytypes":
+                    {
+                     "phrase":"string"
+                    },
+                 "rotation":0,
+                 "type":"speaker",
+                 "visible":true,
+                 "width":0,
+                 "x":380.5,
+                 "y":443
+                }, 
+                {
+                 "height":0,
+                 "id":28,
+                 "name":"villager",
+                 "point":true,
+                 "properties":
+                    {
+                     "phrase":"No monsters getting in here on my watch."
+                    },
+                 "propertytypes":
+                    {
+                     "phrase":"string"
+                    },
+                 "rotation":0,
+                 "type":"speaker",
+                 "visible":true,
+                 "width":0,
+                 "x":230.5,
+                 "y":401
+                }, 
+                {
+                 "height":0,
+                 "id":29,
+                 "name":"villager",
+                 "point":true,
+                 "properties":
+                    {
+                     "phrase":"Hands off the booty."
+                    },
+                 "propertytypes":
+                    {
+                     "phrase":"string"
+                    },
+                 "rotation":0,
+                 "type":"speaker",
+                 "visible":true,
+                 "width":0,
+                 "x":202,
+                 "y":316
+                }, 
+                {
+                 "height":0,
+                 "id":30,
+                 "name":"villager",
+                 "point":true,
+                 "properties":
+                    {
+                     "phrase":"We should have a bridge here..."
+                    },
+                 "propertytypes":
+                    {
+                     "phrase":"string"
+                    },
+                 "rotation":0,
+                 "type":"speaker",
+                 "visible":true,
+                 "width":0,
+                 "x":97.5,
+                 "y":136
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -75,7 +155,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":27,
+ "nextobjectid":31,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.1.5",
