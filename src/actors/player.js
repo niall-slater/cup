@@ -48,8 +48,7 @@ class Player extends Phaser.Sprite {
     	cursors = game.input.keyboard.createCursorKeys();
 		cursorsWASD = game.input.keyboard.addKeys({ 'up': Phaser.KeyCode.W, 'down': Phaser.KeyCode.S, 'left': Phaser.KeyCode.A, 'right': Phaser.KeyCode.D });
 		
-		console.log(cursors);
-		console.log(cursorsWASD);
+		//Set up arrow keys and then WASD
 		
 		cursors.left.onDown.add( () => { 
 			this.onPressCursor('left');

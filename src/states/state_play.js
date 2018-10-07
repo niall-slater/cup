@@ -166,20 +166,6 @@ var playState = {
 		
 		//Begin an encounter between the player and foe
 		
-		//set flags to prevent other encounters triggering in the background
-		//stop creature wandering if possible
-		//disable rendering of tilemap and effects
-		//switch player input to encounter mode
-		//set encounter ui to visible
-		//set sprites and data to the ones for this new encounter
-			//OR INSTEAD
-			//save playState information
-			//switch to encounter state
-			//handle everything there instead
-			//but this would need some refactoring of the create code and could cause bugs
-		
-		//lets try implementing it in playstate for starters
-		
 		this.encounterPlaying = true;
 		playState.player.body.velocity.x = 0;
 		playState.player.body.velocity.y = 0;
@@ -194,6 +180,7 @@ var playState = {
 	},
 	
 	updateEncounter: function() {
+		
 	},
 	
 	endEncounter: function() {

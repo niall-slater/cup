@@ -120,7 +120,6 @@ var ui = {
 			this.sprite_background = game.add.sprite(0, 0, 'enc_background');
 			this.sprite_player = game.add.sprite(16, gameHeight - 116, 'enc_player');
 			this.sprite_monster = [];
-//			this.sprite_monster.push(game.add.sprite(this.position_monster.x + this.tweenDistance, this.position_monster.y, 'enc_monster_legs', legsSelection));
 			this.sprite_monster.push(game.add.sprite(this.position_monster.x + this.tweenDistance, this.position_monster.y, 'enc_monster_bodies', bodySelection));
 			this.sprite_monster.push(game.add.sprite(this.position_monster.x + this.tweenDistance, this.position_monster.y, 'enc_monster_heads', headSelection));
 
@@ -133,27 +132,49 @@ var ui = {
 			
 			//Give button
 			this.menu.add(this.menu.buttonGive = new SlickUI.Element.Button(this.padding, this.padding + 20, this.buttonWidth, this.menuHeight/2));
-			this.menu.buttonGive.add(this.menu.buttonGive.label = new SlickUI.Element.Text(this.padding, 0, 'GIVE', 10, style_small)).centerHorizontally();
+			this.menu.buttonGive.add(this.menu.buttonGive.label = new SlickUI.Element.Text(this.padding, 0, 'FOOD', 10, style_small)).centerHorizontally();
+			this.menu.buttonGive.events.onInputUp.add(this.openFood);
 			
+			/*
 			//Eat button
 			this.menu.add(this.menu.buttonEat = new SlickUI.Element.Button(this.padding * 2 + this.buttonWidth, this.padding + 20, this.buttonWidth, this.menuHeight/2));
 			this.menu.buttonEat.add(this.menu.buttonEat.label = new SlickUI.Element.Text(this.padding, 0, 'EAT', 10, style_small)).centerHorizontally();
+			this.menu.buttonRun.events.onInputUp.add(this.openGive);
+			*/
 			
 			//Run button
 			this.menu.add(this.menu.buttonRun = new SlickUI.Element.Button(this.padding * 3 + this.buttonWidth * 2, this.padding + 20, this.buttonWidth, this.menuHeight/2));
 			this.menu.buttonRun.add(this.menu.buttonRun.label = new SlickUI.Element.Text(this.padding, 0, 'RUN', 10, style_small)).centerHorizontally();
-			this.menu.buttonRun.events.onInputUp.add(playState.endEncounter);
+			this.menu.buttonRun.events.onInputUp.add(this.endEncounter);
 			
-			//Put it out of view so it can slide in
+			//Put menu out of view so it can slide in
 			this.menu.y += this.tweenDistance;
-			
-			//Bring the menu in
 			game.camera.flash(0xffffff, this.delay/2, false);
-			
 			game.time.events.add(this.delay, this.tweenInUI, this);
 			
-            
+			/* CREATE FOOD MENU */
 			
+			slickUI.add(this.menuFood = new SlickUI.Element.Panel(
+				this.margin, this.margin,
+				gameWidth*.75, gameHeight - this.margin*2));
+			this.menuFood.add(this.menuFood.title = new SlickUI.Element.Text(this.margin, 0, 'FOOD', 14, style_small));
+			this.menuFood.x = -gameWidth*.75;
+			
+			this.menuFood.add(this.menuFood.buttonClose = new SlickUI.Element.Button(this.menuFood.width - this.margin - 24, this.margin, 24, 24));
+			this.menuFood.buttonClose.add(this.menuFood.buttonClose.label = new SlickUI.Element.Text(0, -4, 'x', 8, style_small)).centerHorizontally();
+			this.menuFood.buttonClose.events.onInputUp.add(this.closeFood);
+			
+			for (let i = 0; i < ui.inventory.items.length; i++) {
+				let itemButton;
+				let itemHeight = 32;
+				let itemWidth = 124;
+				let itemsStartY = 16;
+				let item = ui.inventory.items[i];
+				this.menuFood.add(itemButton = new SlickUI.Element.Button(this.margin, itemsStartY + this.margin + (i * itemHeight), itemWidth, itemHeight));
+				itemButton.add(new SlickUI.Element.Text(0, 0, item.name, 8, style_small));
+				itemButton.events.onInputUp.add(()=>{console.log('Chose ' + item.name)});
+			}
+            
 		},
 		
 		tweenInUI: function() {
@@ -167,6 +188,24 @@ var ui = {
 				game.add.tween(this.menu).to( {y: gameHeight - this.menuHeight - this.margin}, 500, Phaser.Easing.Cubic.Out, true)
 			}, this);
 			
+		},
+		
+		//MENU OPTIONS
+		
+		openFood: function() {
+			game.add.tween(ui.encounter.menu).to( {y: ui.encounter.menu.y + ui.encounter.tweenDistance}, 500, Phaser.Easing.Cubic.Out, true);
+			
+			game.add.tween(ui.encounter.menuFood).to( {x: ui.encounter.margin}, 500, Phaser.Easing.Cubic.Out, true);
+		},
+		
+		closeFood: function() {
+			game.add.tween(ui.encounter.menu).to( {y: ui.encounter.menu.y - ui.encounter.tweenDistance}, 500, Phaser.Easing.Cubic.Out, true);
+			
+			game.add.tween(ui.encounter.menuFood).to( {x: 0 - gameWidth*.75}, 500, Phaser.Easing.Cubic.Out, true);
+		},
+		
+		endEncounter: function() {
+			playState.endEncounter();
 		}
 		
 	}
