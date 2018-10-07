@@ -120,7 +120,7 @@ var ui = {
 			this.sprite_background = game.add.sprite(0, 0, 'enc_background');
 			this.sprite_player = game.add.sprite(16, gameHeight - 116, 'enc_player');
 			this.sprite_monster = [];
-			this.sprite_monster.push(game.add.sprite(this.position_monster.x + this.tweenDistance, this.position_monster.y, 'enc_monster_legs', legsSelection));
+//			this.sprite_monster.push(game.add.sprite(this.position_monster.x + this.tweenDistance, this.position_monster.y, 'enc_monster_legs', legsSelection));
 			this.sprite_monster.push(game.add.sprite(this.position_monster.x + this.tweenDistance, this.position_monster.y, 'enc_monster_bodies', bodySelection));
 			this.sprite_monster.push(game.add.sprite(this.position_monster.x + this.tweenDistance, this.position_monster.y, 'enc_monster_heads', headSelection));
 
@@ -143,9 +143,6 @@ var ui = {
 			this.menu.add(this.menu.buttonRun = new SlickUI.Element.Button(this.padding * 3 + this.buttonWidth * 2, this.padding + 20, this.buttonWidth, this.menuHeight/2));
 			this.menu.buttonRun.add(this.menu.buttonRun.label = new SlickUI.Element.Text(this.padding, 0, 'RUN', 10, style_small)).centerHorizontally();
 			this.menu.buttonRun.events.onInputUp.add(playState.endEncounter);
-			
-			//Set up cursor
-			//
 			
 			//Put it out of view so it can slide in
 			this.menu.y += this.tweenDistance;
