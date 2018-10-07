@@ -102,6 +102,8 @@ var ui = {
 		
 		sprite_monster: null,
 		
+		cursor: null,
+		
 		init: function() {
 			
 			game.camera.x = 0;
@@ -118,27 +120,37 @@ var ui = {
 			this.sprite_background = game.add.sprite(0, 0, 'enc_background');
 			this.sprite_player = game.add.sprite(16, gameHeight - 116, 'enc_player');
 			this.sprite_monster = [];
-			this.sprite_monster.push(game.add.sprite(this.position_monster.x + this.tweenDistance, this.position_monster.y, 'enc_monster_bodies', bodySelection));
 			this.sprite_monster.push(game.add.sprite(this.position_monster.x + this.tweenDistance, this.position_monster.y, 'enc_monster_legs', legsSelection));
+			this.sprite_monster.push(game.add.sprite(this.position_monster.x + this.tweenDistance, this.position_monster.y, 'enc_monster_bodies', bodySelection));
 			this.sprite_monster.push(game.add.sprite(this.position_monster.x + this.tweenDistance, this.position_monster.y, 'enc_monster_heads', headSelection));
 
-			//Create menu
+			/* CREATE MENU */
+			//base panel
 			slickUI.add(this.menu = new SlickUI.Element.Panel(
 				this.margin, gameHeight - this.menuHeight - this.margin,
 				gameWidth - this.margin*2, this.menuHeight));
 			this.menu.add(this.menu.title = new SlickUI.Element.Text(this.padding, 0, 'BATTLE', 14, style_small));
+			
+			//Give button
 			this.menu.add(this.menu.buttonGive = new SlickUI.Element.Button(this.padding, this.padding + 20, this.buttonWidth, this.menuHeight/2));
 			this.menu.buttonGive.add(this.menu.buttonGive.label = new SlickUI.Element.Text(this.padding, 0, 'GIVE', 10, style_small)).centerHorizontally();
 			
+			//Eat button
 			this.menu.add(this.menu.buttonEat = new SlickUI.Element.Button(this.padding * 2 + this.buttonWidth, this.padding + 20, this.buttonWidth, this.menuHeight/2));
 			this.menu.buttonEat.add(this.menu.buttonEat.label = new SlickUI.Element.Text(this.padding, 0, 'EAT', 10, style_small)).centerHorizontally();
 			
+			//Run button
 			this.menu.add(this.menu.buttonRun = new SlickUI.Element.Button(this.padding * 3 + this.buttonWidth * 2, this.padding + 20, this.buttonWidth, this.menuHeight/2));
 			this.menu.buttonRun.add(this.menu.buttonRun.label = new SlickUI.Element.Text(this.padding, 0, 'RUN', 10, style_small)).centerHorizontally();
 			this.menu.buttonRun.events.onInputUp.add(playState.endEncounter);
 			
+			//Set up cursor
+			//
+			
+			//Put it out of view so it can slide in
 			this.menu.y += this.tweenDistance;
 			
+			//Bring the menu in
 			game.camera.flash(0xffffff, this.delay/2, false);
 			
 			game.time.events.add(this.delay, this.tweenInUI, this);

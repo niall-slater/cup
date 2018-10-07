@@ -53,6 +53,8 @@ var loadState = {
 		game.load.image('ui_speechBubble_tail', 'res/sprites/ui/speechBubble9/tail.png');
         game.load.spritesheet('characters_roguelike', 'res/sprites/ui/ui_sheet.png', 16, 16, maxChars, 0, 0);
 		
+		game.load.image('ui_cursor', 'res/sprites/ui/cursor.png');
+		
 		game.load.image('enc_background', 'res/sprites/ui/enc_background.png');
 		game.load.image('enc_player', 'res/sprites/ui/enc_player.png');
         

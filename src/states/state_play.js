@@ -1,6 +1,7 @@
 'use strict';
 
 let cursors;
+let cursorsWASD;
 
 var playState = {
 	
@@ -37,7 +38,6 @@ var playState = {
 		game.time.desiredFps = 60;
         
         //Create player
-    	cursors = game.input.keyboard.createCursorKeys();
 		this.player = new Player(game, 186, 250);
         
 		//Create map

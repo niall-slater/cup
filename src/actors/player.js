@@ -45,6 +45,11 @@ class Player extends Phaser.Sprite {
 		//Encounters
 		this.encountersEnabled = true;
 		
+    	cursors = game.input.keyboard.createCursorKeys();
+		cursorsWASD = game.input.keyboard.addKeys({ 'up': Phaser.KeyCode.W, 'down': Phaser.KeyCode.S, 'left': Phaser.KeyCode.A, 'right': Phaser.KeyCode.D });
+		
+		console.log(cursors);
+		console.log(cursorsWASD);
 		
 		cursors.left.onDown.add( () => { 
 			this.onPressCursor('left');
@@ -56,6 +61,19 @@ class Player extends Phaser.Sprite {
 			this.onPressCursor('up');
 		} );
 		cursors.down.onDown.add( () => { 
+			this.onPressCursor('down');
+		} );
+		
+		cursorsWASD.left.onDown.add( () => { 
+			this.onPressCursor('left');
+		} );
+		cursorsWASD.right.onDown.add( () => { 
+			this.onPressCursor('right');
+		} );
+		cursorsWASD.up.onDown.add( () => { 
+			this.onPressCursor('up');
+		} );
+		cursorsWASD.down.onDown.add( () => { 
 			this.onPressCursor('down');
 		} );
 		
@@ -82,20 +100,20 @@ class Player extends Phaser.Sprite {
 			return;
 		}
 		
-		if (cursors.left.isDown)
+		if (cursors.left.isDown || cursorsWASD.left.isDown)
 		{
 			this.body.velocity.x = -this.moveSpeed;
 		}
-		else if (cursors.right.isDown)
+		else if (cursors.right.isDown || cursorsWASD.right.isDown)
 		{
 			this.body.velocity.x = this.moveSpeed;
 		}
 
-		if (cursors.up.isDown)
+		if (cursors.up.isDown || cursorsWASD.up.isDown)
 		{
 			this.body.velocity.y = -this.moveSpeed;
 		}
-		else if (cursors.down.isDown)
+		else if (cursors.down.isDown || cursorsWASD.down.isDown)
 		{
 			this.body.velocity.y = this.moveSpeed;
 		}
