@@ -66,6 +66,11 @@ var ui = {
 			
 			this.items.push(item);
 			
+			this.addEntryToList(item);
+			
+		},
+		
+		addEntryToList: function(item) {
 			let numItems = this.items.length;
 			
 			let entry;
@@ -73,14 +78,29 @@ var ui = {
 			
 			
 			ui.inventory.panel.add(icon = new SlickUI.Element.DisplayObject(
-				this.padding, Math.floor(this.listStartY + this.padding * 2 + (numItems * this.entryHeight - 2)),
-										 item));
+				this.padding, 
+				Math.floor(this.listStartY + this.padding * 2 + (numItems * this.entryHeight - 2)),
+				item));
 			
 			ui.inventory.panel.add(entry = new SlickUI.Element.Text(
-				Math.floor(this.padding * 2), Math.floor(this.listStartY + numItems * this.entryHeight + this.padding),
-																		item.name,
-																		null,
-																		style_small));
+				Math.floor(this.padding * 2),
+				Math.floor(this.listStartY + numItems * this.entryHeight + this.padding),
+				item.name,
+				null,
+				style_small));
+		},
+		
+		removeItem: function(item) {
+			
+			this.items.splice(this.items.indexOf(item), 1);
+			console.log(this.items);
+			
+//			ui.inventory.panel.destroy();
+//			ui.inventory.init();
+//
+//			for (let i = 0; i < this.items.length; i++) {
+//				ui.inventory.addEntryToList(this.items[i]);
+//			}
 			
 		}
 	},
@@ -164,6 +184,7 @@ var ui = {
 			this.menuFood.buttonClose.add(this.menuFood.buttonClose.label = new SlickUI.Element.Text(0, -4, 'x', 8, style_small)).centerHorizontally();
 			this.menuFood.buttonClose.events.onInputUp.add(this.closeFood);
 			
+			this.menuFood.entries = [];
 			for (let i = 0; i < ui.inventory.items.length; i++) {
 				let itemButton;
 				let itemHeight = 32;
@@ -172,9 +193,32 @@ var ui = {
 				let item = ui.inventory.items[i];
 				this.menuFood.add(itemButton = new SlickUI.Element.Button(this.margin, itemsStartY + this.margin + (i * itemHeight), itemWidth, itemHeight));
 				itemButton.add(new SlickUI.Element.Text(0, 0, item.name, 8, style_small));
-				itemButton.events.onInputUp.add(()=>{console.log('Chose ' + item.name)});
+				itemButton.events.onInputUp.add(()=>{ui.encounter.useFood(item)});
+				this.menuFood.entries.push(itemButton);
 			}
             
+		},
+		
+		rebuildFoodList: function() {
+			
+			for (let i = 0; i < this.menuFood.entries.length; i++) {
+				this.menuFood.entries[i].destroy();
+			}
+			
+			this.menuFood.entries = [];
+			
+			for (let i = 0; i < ui.inventory.items.length; i++) {
+				let itemButton;
+				let itemHeight = 32;
+				let itemWidth = 124;
+				let itemsStartY = 16;
+				let item = ui.inventory.items[i];
+				this.menuFood.add(itemButton = new SlickUI.Element.Button(this.margin, itemsStartY + this.margin + (i * itemHeight), itemWidth, itemHeight));
+				itemButton.add(new SlickUI.Element.Text(0, 0, item.name, 8, style_small));
+				itemButton.events.onInputUp.add(()=>{ui.encounter.useFood(item)});
+				this.menuFood.entries.push(itemButton);
+			}
+			
 		},
 		
 		tweenInUI: function() {
@@ -202,6 +246,13 @@ var ui = {
 			game.add.tween(ui.encounter.menu).to( {y: ui.encounter.menu.y - ui.encounter.tweenDistance}, 500, Phaser.Easing.Cubic.Out, true);
 			
 			game.add.tween(ui.encounter.menuFood).to( {x: 0 - gameWidth*.75}, 500, Phaser.Easing.Cubic.Out, true);
+		},
+		
+		useFood: function(item) {
+			console.log('Chose ' + item.name);
+			ui.inventory.removeItem(item);
+			this.rebuildFoodList();
+			ui.encounter.closeFood();
 		},
 		
 		endEncounter: function() {
