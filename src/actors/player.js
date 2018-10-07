@@ -35,11 +35,15 @@ class Player extends Phaser.Sprite {
         this.KEY_Z = game.input.keyboard.addKey(Phaser.Keyboard.Z);
         this.KEY_Z.onDown.add(this.onPressZ.bind(this));
 		
+		/* PLAYER INFO */
+		//Combat
 		this.health = 3;
 		this.attackForce = 100;
 		this.invulnerableCooldown = 500; //in ms
 		this.invulnerable = false;
 		this.punchForce = 100;
+		//Encounters
+		this.encountersEnabled = true;
 		
 		
 		cursors.left.onDown.add( () => { 
@@ -71,7 +75,6 @@ class Player extends Phaser.Sprite {
 	}
 	
 	updateInOverworld() {
-		
     	this.body.velocity.x = 0;
     	this.body.velocity.y = 0;
 		
@@ -97,21 +100,8 @@ class Player extends Phaser.Sprite {
 			this.body.velocity.y = this.moveSpeed;
 		}
 		
-		//Tile sprite indexes for triggering encounters:
-		//593 = long grass
-		//650 = longer grass
-		
-		let tileCheck = playState.world.currentChunk.getTileAtPixel(this.x, this.y, 'under-overlay');
-		let encounterChance = 0.03;
-		
-		if (tileCheck != null) {
-			let index = tileCheck.index;
-			if (index === 593 || index === 650) {
-				if (Math.random() < encounterChance) {
-					playState.startEncounter();
-					console.log("ENCOUNTER");
-				}
-			}
+		if (this.encountersEnabled) {
+			this.rollForEncounter();
 		}
 	}
 	
@@ -205,6 +195,32 @@ class Player extends Phaser.Sprite {
 	
 	toggleInventory() {
 		ui.inventory.toggle();
+	}
+	
+	rollForEncounter() {
+		
+		/*
+		*  Roll a die to decide if there will be an encounter
+		*/
+		
+		//Tile sprite indexes for triggering encounters:
+		//593 = long grass
+		//650 = longer grass
+		
+		let tileCheck = playState.world.currentChunk.getTileAtPixel(this.x, this.y, 'under-overlay');
+		let encounterChance = 0.03;
+		
+		if (tileCheck != null) {
+			let index = tileCheck.index;
+			if (index === 593 || index === 650) {
+				if (Math.random() < encounterChance) {
+					playState.startEncounter();
+					//Disable encounters until we've done this one, so we
+					//don't immediately have another one on completion
+					this.encountersEnabled = false;
+				}
+			}
+		}
 	}
 	
 };

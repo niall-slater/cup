@@ -183,7 +183,6 @@ var playState = {
 		this.encounterPlaying = true;
 		playState.player.body.velocity.x = 0;
 		playState.player.body.velocity.y = 0;
-		this.world.currentChunk.hiddenForEncounter = true;
 		
 		game.camera.fade(0xffffff, 200, true);
 		
@@ -198,13 +197,24 @@ var playState = {
 	},
 	
 	endEncounter: function() {
+	
+		game.camera.flash(0x000000, ui.encounter.delay*1.5, false);
+			
+		ui.encounter.sprite_monster.forEach((element)=>{
+			element.destroy();
+		});
+		ui.encounter.sprite_background.destroy();
+		ui.encounter.menu.destroy();
 		
-		game.camera.follow(this.player, .2, .2);
-		game.camera.x = this.player.x;
-		game.camera.y = this.player.y;
+		game.camera.follow(playState.player, .2, .2);
+		//game.camera.x = playState.player.x;
+		//game.camera.y = playState.player.y;
 		
 		game.world.currentChunk.enable();
-		this.encounterPlaying = false;
+		playState.encounterPlaying = false;
+		
+		game.time.events.add(1500, () => {playState.player.encountersEnabled = true;}, this);
+		
 	}
 	
 };

@@ -135,7 +135,7 @@ var ui = {
 			
 			this.menu.add(this.menu.buttonRun = new SlickUI.Element.Button(this.padding * 3 + this.buttonWidth * 2, this.padding + 20, this.buttonWidth, this.menuHeight/2));
 			this.menu.buttonRun.add(this.menu.buttonRun.label = new SlickUI.Element.Text(this.padding, 0, 'RUN', 10, style_small)).centerHorizontally();
-			this.menu.buttonRun.events.onInputUp.add(this.endEncounter);
+			this.menu.buttonRun.events.onInputUp.add(playState.endEncounter);
 			
 			this.menu.y += this.tweenDistance;
 			
@@ -158,16 +158,6 @@ var ui = {
 				game.add.tween(this.menu).to( {y: gameHeight - this.menuHeight - this.margin}, 500, Phaser.Easing.Cubic.Out, true)
 			}, this);
 			
-		},
-		
-		endEncounter: function() {
-			ui.encounter.sprite_monster.forEach((element)=>{
-				element.destroy();
-			});
-			ui.encounter.sprite_background.destroy();
-			ui.encounter.menu.destroy();
-			
-			playState.endEncounter();
 		}
 		
 	}
