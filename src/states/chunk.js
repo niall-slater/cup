@@ -134,7 +134,10 @@ class Chunk {
 		this.currentLayers[3].bringToTop();
 		game.world.bringToTop(this.groupEffects);
 		
+		console.log(ui.inventory.panel.container);
+		
 		game.world.bringToTop(ui.inventory.panel.container.displayGroup.parent);
+		
 		
 		//Turn on night effects if it's night-time
 		this.night.visible = playState.isNightTime;

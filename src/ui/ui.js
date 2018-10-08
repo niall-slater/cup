@@ -36,8 +36,16 @@ var ui = {
 			ui.inventory.panel.alpha = .95;
 			ui.inventory.panel.x = this.margin + 256;
 			
-			ui.inventory.panel.icons = [];
-			ui.inventory.panel.entries = [];
+			for (let i = 0; i < this.items.length; i++) {
+				//The below line is causing a problem.
+				/*
+					phaser.min.js:3 Uncaught TypeError: Cannot read property 'camera' of null
+						at Roast.i.Component.FixedToCamera.postUpdate (phaser.min.js:3)
+						at Roast.postUpdate (phaser.min.js:3)
+				*/
+				
+				this.addEntryToList(this.items[i]);
+			}
 		},
 		
 		//Toggle inventory display
@@ -67,6 +75,9 @@ var ui = {
 		
 		addItem: function(item) {
 			
+			//itemSprite is the object from the game world, which is a sub-subtype of Phaser.Sprite
+			//store the itemSprite in an item object, which will have item.sprite, item.label
+			
 			this.items.push(item);
 			
 			this.addEntryToList(item);
@@ -76,39 +87,20 @@ var ui = {
 		addEntryToList: function(item) {
 			let numItems = this.items.length;
 			
-			let icon;
-			let entry;
+			ui.inventory.panel.add(item.icon = new SlickUI.Element.DisplayObject(this.padding, Math.floor(this.listStartY + this.padding * 2 + (numItems * this.entryHeight - 2)), item));
 			
-			ui.inventory.panel.add(icon = new SlickUI.Element.DisplayObject(this.padding, Math.floor(this.listStartY + this.padding * 2 + (numItems * this.entryHeight - 2)), item));
-			
-			ui.inventory.panel.add(entry = new SlickUI.Element.Text(Math.floor(this.padding * 2), Math.floor(this.listStartY + numItems * this.entryHeight + this.padding), item.name, null, style_small));
-			
-			ui.inventory.panel.icons.push(icon);
-			ui.inventory.panel.entries.push(entry);
-		},
-		
-		rebuildPanel: function() {
-			for (let i = 0; i < ui.inventory.panel.icons.length; i++) {
-				ui.inventory.panel.remove(ui.inventory.panel.icons[i]);
-			}
-			ui.inventory.panel.icons = [];
-			
-			for (let i = 0; i < ui.inventory.panel.entries.length; i++) {
-				ui.inventory.panel.remove(ui.inventory.panel.entries[i]);
-			}
-			ui.inventory.panel.entries = [];
-
-			for (let i = 0; i < this.items.length; i++) {
-				ui.inventory.addEntryToList(ui.inventory.items[i]);
-			}
-			
+			ui.inventory.panel.add(item.label = new SlickUI.Element.Text(Math.floor(this.padding * 2), Math.floor(this.listStartY + numItems * this.entryHeight + this.padding), item.name, null, style_small));
 		},
 		
 		removeItem: function(item) {
 			
-			this.items.splice(this.items.indexOf(item), 1);
+			let index = this.items.indexOf(item);
 			
-			ui.inventory.rebuildPanel();
+			ui.inventory.panel.destroy();
+			
+			this.items.splice(index, 1);
+			
+			ui.inventory.init();
 			
 		}
 	},
@@ -207,7 +199,7 @@ var ui = {
             
 		},
 		
-		rebuildFoodList: function() {
+		refreshFoodList: function() {
 			
 			for (let i = 0; i < this.menuFood.entries.length; i++) {
 				this.menuFood.remove(this.menuFood.entries[i]);
@@ -259,8 +251,8 @@ var ui = {
 		useFood: function(item) {
 			console.log('Chose ' + item.name);
 			ui.inventory.removeItem(item);
-			this.rebuildFoodList();
-			ui.encounter.closeFood();
+			this.refreshFoodList();
+//			ui.encounter.closeFood();
 		},
 		
 		endEncounter: function() {
