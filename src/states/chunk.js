@@ -46,9 +46,6 @@ class Chunk {
 		this.night.alpha = 0.5;
 		this.night.visible = playState.isNightTime;
 		
-		//Encounter visibility flag
-		this.hiddenForEncounter = false;
-		
 		this.groupItems.add(new Roast(game, playState.player.x, playState.player.y));
 		this.groupItems.add(new Roast(game, playState.player.x, playState.player.y));
 		this.groupItems.add(new Roast(game, playState.player.x, playState.player.y));

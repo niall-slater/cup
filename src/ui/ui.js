@@ -37,13 +37,6 @@ var ui = {
 			ui.inventory.panel.x = this.margin + 256;
 			
 			for (let i = 0; i < this.items.length; i++) {
-				//The below line is causing a problem.
-				/*
-					phaser.min.js:3 Uncaught TypeError: Cannot read property 'camera' of null
-						at Roast.i.Component.FixedToCamera.postUpdate (phaser.min.js:3)
-						at Roast.postUpdate (phaser.min.js:3)
-				*/
-				
 				this.addEntryToList(this.items[i]);
 			}
 		},
@@ -98,7 +91,7 @@ var ui = {
 			
 			ui.inventory.panel.destroy();
 			
-			this.items.splice(index, 1);
+			this.items.splice(index-1, 1);
 			
 			ui.inventory.init();
 			
